@@ -1,27 +1,27 @@
-package bdbt_bada_projekt.SpringApplication.tables;
+package bdbt_bada_projekt.SpringApplication.models;
 
 public class Adresy {
-    private int id_adresu;
+    private int idadresu;
     private String miejscowosc;
     private String ulica;
-    private int nr_domu;
-    private String kod_pocztowy;
+    private int nrdomu;
+    private String kodpocztowy;
 
-    public Adresy(int id_adresu, String miejscowosc, String ulica, int nr_domu, String kod_pocztowy) {
+    public Adresy(int idadresu, String miejscowosc, String ulica, int nrdomu, String kodpocztowy) {
         super();
-        this.id_adresu = id_adresu;
+        this.idadresu = idadresu;
         this.miejscowosc = miejscowosc;
         this.ulica = ulica;
-        this.nr_domu = nr_domu;
-        this.kod_pocztowy = kod_pocztowy;
+        this.nrdomu = nrdomu;
+        this.kodpocztowy = kodpocztowy;
     }
 
-    public int getId_adresu() {
-        return id_adresu;
+    public int getIdadresu() {
+        return idadresu;
     }
 
-    public void setId_adresu(int id_adresu) {
-        this.id_adresu = id_adresu;
+    public void setIdadresu(int idadresu) {
+        this.idadresu = idadresu;
     }
 
     public String getMiejscowosc() {
@@ -40,20 +40,20 @@ public class Adresy {
         this.ulica = ulica;
     }
 
-    public int getNr_domu() {
-        return nr_domu;
+    public int getNrdomu() {
+        return nrdomu;
     }
 
-    public void setNr_domu(int nr_domu) {
-        this.nr_domu = nr_domu;
+    public void setNrdomu(int nrdomu) {
+        this.nrdomu = nrdomu;
     }
 
     public String getKodpocztowy() {
-        return kod_pocztowy;
+        return kodpocztowy;
     }
 
     public void setKodpocztowy(String kodpocztowy) {
-        this.kod_pocztowy = kodpocztowy;
+        this.kodpocztowy = kodpocztowy;
     }
 
     public Adresy() {
@@ -62,11 +62,11 @@ public class Adresy {
     @Override
     public String toString() {
         return "Adresy{" +
-                "id_adresu=" + id_adresu +
+                "id_adresu=" + idadresu +
                 ", miejscowosc='" + miejscowosc + '\'' +
                 ", ulica='" + ulica + '\'' +
-                ", nr_domu=" + nr_domu +
-                ", kodpocztowy='" + kod_pocztowy + '\'' +
+                ", nr_domu=" + nrdomu +
+                ", kodpocztowy='" + kodpocztowy + '\'' +
                 '}';
     }
 }

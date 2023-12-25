@@ -1,4 +1,5 @@
 package bdbt_bada_projekt.SpringApplication.tables;
+import bdbt_bada_projekt.SpringApplication.models.Magazyny;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,12 +17,12 @@ public class MagazynyDAO {
 
     public List<Magazyny> list(){
 
-        String sql = "SELECT * FROM ADRESY";
+        String sql = "SELECT * FROM MAGAZYNY";
 
-        List<Magazyny> listMagazyny = jdbcTemplate.query(sql,
+        List<Magazyny> magazynyList = jdbcTemplate.query(sql,
                 BeanPropertyRowMapper.newInstance(Magazyny.class));
 
-        return listMagazyny;
+        return magazynyList;
     }
 
 

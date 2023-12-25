@@ -1,7 +1,7 @@
-package bdbt_bada_projekt;
+package bdbt_bada_projekt.SpringApplication.tables;
 
+import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import bdbt_bada_projekt.SpringApplication.models.Magazyny;
-import bdbt_bada_projekt.SpringApplication.tables.MagazynyDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,9 +11,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MagazynyDAOTest {
-
-    private MagazynyDAO dao;
+class AdresyDAOTest {
+    private AdresyDAO dao;
 
     @BeforeEach
     void setUp() {
@@ -23,28 +22,11 @@ class MagazynyDAOTest {
         dataSource.setPassword("ARTUR");
         dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
 
-        dao = new MagazynyDAO(new JdbcTemplate(dataSource));
+        dao = new AdresyDAO(new JdbcTemplate(dataSource));
     }
-
     @Test
     void list() {
-        List<Magazyny> magazynyList = dao.list();
-        assertTrue(!magazynyList.isEmpty());
-    }
-
-    @Test
-    void save() {
-    }
-
-    @Test
-    void get() {
-    }
-
-    @Test
-    void update() {
-    }
-
-    @Test
-    void delete() {
+        List<Adresy> adresyList = dao.list();
+        assertTrue(!adresyList.isEmpty());
     }
 }

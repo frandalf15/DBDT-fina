@@ -1,4 +1,4 @@
-package bdbt_bada_projekt.SpringApplication;
+package bdbt_bada_projekt.SpringApplication.Controllers;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;

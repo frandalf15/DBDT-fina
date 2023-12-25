@@ -1,6 +1,7 @@
-package bdbt_bada_projekt.SpringApplication.tables;
+package bdbt_bada_projekt.SpringApplication.models;
 
 public class Magazyny {
+
     private int id_magazynu;
     private String nazma;
     private String email;

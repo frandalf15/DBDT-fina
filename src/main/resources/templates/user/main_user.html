@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Main User Page</title>
-
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-
 </head>
 <body>
 
@@ -52,15 +50,53 @@
                         to the main page!</label>
                     <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
                 </div>
+                <div>
+                    <h2 style="text-align: center">Adress table</h2>
+
+                    <!-- Table -->
+                    <table border = "1" cellpadding = "10">
+                        <!-- Table header -->
+                        <thead>
+                        <tr> <!-- Table row -->
+                            <th>idadresu</th>
+                            <th>miejscowosc</th>
+                            <th>ulica</th>
+                            <th>nrdomu</th>
+                            <th>kodpocztowy</th>
+                        </tr>
+                        </thead>
+                        <!-- Table body -->
+                        <tbody>
+                        <tr th:each = "adresy : ${adresyTable}">
+                            <td th:text = "${adresy.idadresu}">idadresu</td>
+                            <td th:text = "${adresy.miejscowosc}">miejscowosc</td>
+                            <td th:text = "${adresy.ulica}">ulica</td>
+                            <td th:text = "${adresy.nrdomu}">nrdomu</td>
+                            <td th:text = "${adresy.kodpocztowy}">kodpocztowy</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div>
+                    <h2 style="text-align: center">Add new address</h2>
+
+                    <br>
+
+
+                </div>
+
 
                 <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
                 </button>
+
+
             </form>
         </div>
 
     </div>
 </div>
-
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
