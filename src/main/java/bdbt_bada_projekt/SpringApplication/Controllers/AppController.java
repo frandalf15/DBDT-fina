@@ -96,6 +96,12 @@ public class AppController implements WebMvcConfigurer {
             return "redirect:/";
         }
 
+        @RequestMapping("/delete/{IDADRESU}")
+        public String delete(@PathVariable(name = "IDADRESU") int IDADRESU){
+            adresyDao.delete(IDADRESU);
+            return "redirect:/";
+        }
+
     }
 
 }

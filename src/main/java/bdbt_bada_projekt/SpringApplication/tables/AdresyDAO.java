@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
 
@@ -51,7 +52,9 @@ public class AdresyDAO {
 
         template.update(sql, param);
     }
-    public void delete(int id) {
+    public void delete(int IDADRESU) {
+        String sql = "DELETE FROM ADRESY WHERE IDADRESU = ?";
+        jdbcTemplate.update(sql, IDADRESU);
     }
 
 

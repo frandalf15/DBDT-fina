@@ -55,4 +55,10 @@ class AdresyDAOTest {
 
         dao.update(adresy);
     }
+    @Test
+    void delete(){
+        int id = 8;
+        dao.delete(id);
+    }
+
 }
