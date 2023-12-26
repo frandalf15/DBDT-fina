@@ -23,14 +23,36 @@ class AdresyDAOTest {
 
         dao = new AdresyDAO(new JdbcTemplate(dataSource));
     }
-//    @Test
+
+    @Test
     void list() {
         List<Adresy> adresyList = dao.list();
         assertFalse(adresyList.isEmpty());
     }
+
     @Test
-     void save(){
-            Adresy adres = new Adresy(10, "Poznan", "Hz",3,"33-333");
-            dao.save(adres);
-        }
+    void save() {
+        Adresy adres = new Adresy(10, "Poznan", "Hz", 3, "33-333");
+        dao.save(adres);
     }
+
+
+    @Test
+    void get() {
+        int id = 5;
+        Adresy adresy = dao.get(id);
+        assertNotNull(adresy);
+    }
+
+    @Test
+    void update(){
+        Adresy adresy = new Adresy();
+        adresy.setIdadresu(10);
+        adresy.setMiejscowosc("Hello");
+        adresy.setKodpocztowy("444");
+        adresy.setNrdomu(3);
+        adresy.setUlica("mine");
+
+        dao.update(adresy);
+    }
+}

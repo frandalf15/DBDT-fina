@@ -73,6 +73,11 @@
                             <td th:text = "${adresy.ulica}">ulica</td>
                             <td th:text = "${adresy.nrdomu}">nrdomu</td>
                             <td th:text = "${adresy.kodpocztowy}">kodpocztowy</td>
+
+                            <td>
+                                <a th:href="@{'/edit/' + ${adresy.idadresu}}">Edit</a>
+                            </td>
+
                         </tr>
                         </tbody>
                     </table>
