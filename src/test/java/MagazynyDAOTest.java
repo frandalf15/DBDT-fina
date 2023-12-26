@@ -1,5 +1,3 @@
-package bdbt_bada_projekt;
-
 import bdbt_bada_projekt.SpringApplication.models.Magazyny;
 import bdbt_bada_projekt.SpringApplication.tables.MagazynyDAO;
 import org.junit.jupiter.api.BeforeEach;

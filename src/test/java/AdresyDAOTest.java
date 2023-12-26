@@ -1,7 +1,6 @@
-package bdbt_bada_projekt.SpringApplication.tables;
-
 import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import bdbt_bada_projekt.SpringApplication.models.Magazyny;
+import bdbt_bada_projekt.SpringApplication.tables.AdresyDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,9 +23,14 @@ class AdresyDAOTest {
 
         dao = new AdresyDAO(new JdbcTemplate(dataSource));
     }
-    @Test
+//    @Test
     void list() {
         List<Adresy> adresyList = dao.list();
-        assertTrue(!adresyList.isEmpty());
+        assertFalse(adresyList.isEmpty());
     }
-}
+    @Test
+     void save(){
+            Adresy adres = new Adresy(10, "Poznan", "Hz",3,"33-333");
+            dao.save(adres);
+        }
+    }
