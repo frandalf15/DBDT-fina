@@ -1,4 +1,4 @@
-package bdbt_bada_projekt.SpringApplication.tables;
+package bdbt_bada_projekt.SpringApplication.DAO;
 
 import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package bdbt_bada_projekt.SpringApplication.tables;
+package bdbt_bada_projekt.SpringApplication.DAO;
 import bdbt_bada_projekt.SpringApplication.models.Magazyny;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

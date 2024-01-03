@@ -8,30 +8,30 @@
 <h1 style="text-align: center; font-size: larger">Enter New Record</h1>
 <br>
 
-  <form action="#" th:action="@{/save}" th:object="${adresy}" method="post">
+  <form action="#" th:action="@{/save}" th:object="${adresy}" method="post" >
 
     <table border="1" cellpadding="10">
 
       <tr>
         <td>ID adresu:</td>
-        <td><input type="number" th:field="*{idadresu}"></td>
+        <td><input type="number" th:field="*{idadresu}" required></td>
       </tr>
 
       <tr>
         <td>Miejscowość:</td>
-        <td><input type="text" th:field="*{miejscowosc}"></td>
+        <td><input type="text" th:field="*{miejscowosc}" required></td>
       </tr>
       <tr>
         <td>Ulica:</td>
-        <td><input type="text" th:field="*{ulica}"></td>
+        <td><input type="text" th:field="*{ulica}" required></td>
       </tr>
       <tr>
         <td>nrdomu:</td>
-        <td><input type="numer" th:field="*{nrdomu}"></td>
+        <td><input type="number" th:field="*{nrdomu}" required></td>
       </tr>
       <tr>
         <td>Kod Pocztowy:</td>
-        <td><input type="text" th:field="*{kodpocztowy}"></td>
+        <td><input type="text" th:field="*{kodpocztowy}" required></td>
       </tr>
 
       <tr>

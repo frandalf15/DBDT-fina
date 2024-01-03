@@ -1,5 +1,5 @@
 import bdbt_bada_projekt.SpringApplication.models.Magazyny;
-import bdbt_bada_projekt.SpringApplication.tables.MagazynyDAO;
+import bdbt_bada_projekt.SpringApplication.DAO.MagazynyDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;

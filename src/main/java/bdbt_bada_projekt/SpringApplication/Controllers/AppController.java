@@ -1,10 +1,7 @@
 package bdbt_bada_projekt.SpringApplication.Controllers;
 
 import bdbt_bada_projekt.SpringApplication.models.Adresy;
-import bdbt_bada_projekt.SpringApplication.tables.AdresyDAO;
-import bdbt_bada_projekt.SpringApplication.tables.MagazynyDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import bdbt_bada_projekt.SpringApplication.DAO.AdresyDAO;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Configuration
 public class AppController implements WebMvcConfigurer {
