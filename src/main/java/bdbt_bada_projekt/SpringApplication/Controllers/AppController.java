@@ -54,50 +54,51 @@ public class AppController implements WebMvcConfigurer {
     @Controller
     public class showUserPage {
 
-        private AdresyDAO adresyDao;
-
-        public showUserPage(AdresyDAO adresyDao) {
-            this.adresyDao = adresyDao;
-        }
-
-        @RequestMapping(value = {"/main_user"})
-        public String showUserPage(Model model) {
-            model.addAttribute("adresyTable", adresyDao.list());
-            return "user/main_user";
-        }
-
-        @RequestMapping(value = "/newAddressRecord")
-        public String addNewRecord(Model model) {
-            model.addAttribute("adresy", new Adresy());
-            return "user/newAddressRecord";
-        }
-
-        @RequestMapping(value = "/save", method = RequestMethod.POST)
-        public String save(@ModelAttribute("adresy") Adresy adresy) {
-            adresyDao.save(adresy);
-            return "redirect:/";
-        }
-
-        @RequestMapping("/edit/{idadresu}")
-        public ModelAndView showEditForm(@PathVariable(name = "idadresu") int idadresu) {
-            ModelAndView mav = new ModelAndView("user/edit_form");
-            Adresy adresy = adresyDao.get(idadresu);
-            mav.addObject("adresy", adresy);
-            return mav;
-        }
-
-        @RequestMapping(value = "/update", method = RequestMethod.POST)
-        public String update(@ModelAttribute("adresy") Adresy adresy){
-            adresyDao.update(adresy);
-            return "redirect:/";
-        }
-
-        @RequestMapping("/delete/{IDADRESU}")
-        public String delete(@PathVariable(name = "IDADRESU") int IDADRESU){
-            adresyDao.delete(IDADRESU);
-            return "redirect:/";
-        }
+//        private AdresyDAO adresyDao;
+//
+//        public showUserPage(AdresyDAO adresyDao) {
+//            this.adresyDao = adresyDao;
+//        }
+//
+//        @RequestMapping(value = {"/main_user"})
+//        public String showUserPage(Model model) {
+//            model.addAttribute("adresyTable", adresyDao.list());
+//            return "user/main_user";
+//        }
+//
+//        @RequestMapping(value = "/newAddressRecord")
+//        public String addNewRecord(Model model) {
+//            model.addAttribute("adresy", new Adresy());
+//            return "user/newAddressRecord";
+//        }
+//
+//        @RequestMapping(value = "/save", method = RequestMethod.POST)
+//        public String save(@ModelAttribute("adresy") Adresy adresy) {
+//            adresyDao.save(adresy);
+//            return "redirect:/";
+//        }
+//
+//        @RequestMapping("/edit/{idadresu}")
+//        public ModelAndView showEditForm(@PathVariable(name = "idadresu") int idadresu) {
+//            ModelAndView mav = new ModelAndView("user/edit_form");
+//            Adresy adresy = adresyDao.get(idadresu);
+//            mav.addObject("adresy", adresy);
+//            return mav;
+//        }
+//
+//        @RequestMapping(value = "/update", method = RequestMethod.POST)
+//        public String update(@ModelAttribute("adresy") Adresy adresy){
+//            adresyDao.update(adresy);
+//            return "redirect:/";
+//        }
+//
+//        @RequestMapping("/delete/{IDADRESU}")
+//        public String delete(@PathVariable(name = "IDADRESU") int IDADRESU){
+//            adresyDao.delete(IDADRESU);
+//            return "redirect:/";
+//        }
+//
+//    }
 
     }
-
 }

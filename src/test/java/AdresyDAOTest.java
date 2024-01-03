@@ -46,7 +46,7 @@ class AdresyDAOTest {
     @Test
     void update(){
         Adresy adresy = new Adresy();
-        adresy.setIdadresu(10);
+        adresy.setIdadresu(5);
         adresy.setMiejscowosc("Hello");
         adresy.setKodpocztowy("444");
         adresy.setNrdomu(3);

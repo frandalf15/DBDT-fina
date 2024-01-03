@@ -1,6 +1,5 @@
 package bdbt_bada_projekt.SpringApplication.DAO;
 
-import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import bdbt_bada_projekt.SpringApplication.models.Towary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
