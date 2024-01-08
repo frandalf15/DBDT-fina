@@ -1,7 +1,9 @@
 package bdbt_bada_projekt.SpringApplication.Controllers;
 
+import bdbt_bada_projekt.SpringApplication.Services.UserService;
 import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import bdbt_bada_projekt.SpringApplication.DAO.AdresyDAO;
+import bdbt_bada_projekt.SpringApplication.models.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +51,34 @@ public class AppController implements WebMvcConfigurer {
             return "admin/main_admin";
         }
     }
+
+
+    @Controller
+    public class RegistrationController {
+
+        // Сервіс для роботи з користувачами (потрібно створити)
+        private final UserService userService;
+
+        // Конструктор
+        public RegistrationController(UserService userService) {
+            this.userService = userService;
+        }
+
+        // Показує форму реєстрації
+        @GetMapping("/register")
+        public String showRegistrationForm(Model model) {
+            model.addAttribute("user", new User());
+            return "register";
+        }
+
+        // Обробляє запит на реєстрацію
+        @PostMapping("/register")
+        public String registerUser(@ModelAttribute("user") User user) {
+            userService.register(user);
+            return "redirect:/login";
+        }
+    }
+
 
 
     @Controller

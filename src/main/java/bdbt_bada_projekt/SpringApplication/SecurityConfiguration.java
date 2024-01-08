@@ -1,39 +1,48 @@
 package bdbt_bada_projekt.SpringApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import bdbt_bada_projekt.SpringApplication.Services.CustomUserDetailsService;
+import bdbt_bada_projekt.SpringApplication.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private final CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("user")
-                .roles("USER")
-                .and()
-                .withUser("admin")
-                .password("admin")
-                .roles("ADMIN");
+        auth
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
-    @Bean
-    public PasswordEncoder getPasswordEncoder() { return NoOpPasswordEncoder.getInstance();
-    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-
-                .antMatchers("/", "/index").permitAll()
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/index", "/register").permitAll()
                 .antMatchers("/resources/static/**").permitAll()
                 .antMatchers("/main").authenticated()
-                .antMatchers("/main_admin").access("hasRole('ADMIN')")
-                .antMatchers("/main_user").access("hasRole('USER')")
+                .antMatchers("/main_admin").hasRole("ADMIN")
+                .antMatchers("/main_user").hasRole("USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -41,11 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/index")
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/index")
                 .permitAll();
     }
-
-
-
 }
