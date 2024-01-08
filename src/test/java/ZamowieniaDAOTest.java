@@ -35,7 +35,7 @@ class ZamowieniaDAOTest {
 
     @Test
     void save() {
-        Zamowienia zamowienia = new Zamowienia(9, Date.valueOf("2024-01-03"), "Odrzucone",1);
+        Zamowienia zamowienia = new Zamowienia(Date.valueOf("2024-01-03"), "Odrzucone",4);
         dao.save(zamowienia);
     }
 
@@ -50,9 +50,8 @@ class ZamowieniaDAOTest {
     void update() {
         Zamowienia zamowienia = new Zamowienia();
 
-        zamowienia.setIDZamowienia(6);
         zamowienia.setData(Date.valueOf("2024-01-03"));
-        zamowienia.setIDKlienta(1);
+        zamowienia.setIDUser(1);
         zamowienia.setStatus("Odrzucone");
         zamowienia.setRabat(0);
         zamowienia.setReklamacja("Brak");

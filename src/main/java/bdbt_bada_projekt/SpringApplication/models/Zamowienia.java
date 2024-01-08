@@ -1,49 +1,49 @@
 package bdbt_bada_projekt.SpringApplication.models;
 
 
+import javax.persistence.*;
 import java.sql.Date;
-
+@Entity
+@Table(name = "Zamowienia")
 public class Zamowienia {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IDZamowienia;
     private Date Data;
     private String Status;
     private Integer Rabat;
     private String Reklamacja;
-    private int IDKlienta;
+    private int IDUser;
 
-    public Zamowienia(int IDZamowienia, Date data, String status, Integer rabat, String reklamacja, int IDKlienta) {
-        this.IDZamowienia = IDZamowienia;
+    public Zamowienia(Date data, String status, Integer rabat, String reklamacja, int IDUser) {
         Data = data;
         Status = status;
         Rabat = rabat;
         Reklamacja = reklamacja;
-        this.IDKlienta = IDKlienta;
+        this.IDUser = IDUser;
     }
 
     public Zamowienia() {
     }
 
-    public Zamowienia(int IDZamowienia, Date data, String status, int IDKlienta) {
-        this.IDZamowienia = IDZamowienia;
+    public Zamowienia(Date data, String status, int IDUser) {
         Data = data;
         Status = status;
-        this.IDKlienta = IDKlienta;
+        this.IDUser = IDUser;
     }
 
-    public Zamowienia(int IDZamowienia, Date data, String status, Integer rabat, int IDKlienta) {
-        this.IDZamowienia = IDZamowienia;
+    public Zamowienia(Date data, String status, Integer rabat, int IDUser) {
         Data = data;
         Status = status;
         Rabat = rabat;
-        this.IDKlienta = IDKlienta;
+        this.IDUser = IDUser;
     }
 
-    public Zamowienia(int IDZamowienia, Date data, String status, String reklamacja, int IDKlienta) {
-        this.IDZamowienia = IDZamowienia;
+    public Zamowienia(Date data, String status, String reklamacja, int IDUser) {
         Data = data;
         Status = status;
         Reklamacja = reklamacja;
-        this.IDKlienta = IDKlienta;
+        this.IDUser = IDUser;
     }
 
     public int getIDZamowienia() {
@@ -86,11 +86,11 @@ public class Zamowienia {
         Reklamacja = reklamacja;
     }
 
-    public int getIDKlienta() {
-        return IDKlienta;
+    public int getIDUser() {
+        return IDUser;
     }
 
-    public void setIDKlienta(int IDKlienta) {
-        this.IDKlienta = IDKlienta;
+    public void setIDUser(int IDUser) {
+        this.IDUser = IDUser;
     }
 }

@@ -1,9 +1,14 @@
 package bdbt_bada_projekt.SpringApplication.Controllers;
 
+import bdbt_bada_projekt.SpringApplication.DAO.TowaryDAO;
+import bdbt_bada_projekt.SpringApplication.DAO.ZamowieniaDAO;
 import bdbt_bada_projekt.SpringApplication.Services.UserService;
 import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import bdbt_bada_projekt.SpringApplication.DAO.AdresyDAO;
+import bdbt_bada_projekt.SpringApplication.models.Towary;
 import bdbt_bada_projekt.SpringApplication.models.User;
+import bdbt_bada_projekt.SpringApplication.models.Zamowienia;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import javax.servlet.http.HttpServletRequest;
-
+import java.util.Date;
+import java.sql.Timestamp;
 @Configuration
 public class AppController implements WebMvcConfigurer {
 
@@ -37,6 +42,8 @@ public class AppController implements WebMvcConfigurer {
                 return "redirect:/main_admin";
             } else if (request.isUserInRole("USER")) {
                 return "redirect:/main_user";
+            } else if (request.isUserInRole("STAFF")){
+                return "redirect:/main_staff";
             } else {
                 return "redirect:/index";
             }
@@ -54,26 +61,33 @@ public class AppController implements WebMvcConfigurer {
 
 
     @Controller
+    public class showStaffPage {
+        @RequestMapping(value = {"/main_staff"})
+        public String showAdminPage(Model model) {
+            return "admin/main_staff";
+        }
+    }
+
+
+
+    @Controller
     public class RegistrationController {
 
-        // Сервіс для роботи з користувачами (потрібно створити)
         private final UserService userService;
 
-        // Конструктор
         public RegistrationController(UserService userService) {
             this.userService = userService;
         }
 
-        // Показує форму реєстрації
         @GetMapping("/register")
         public String showRegistrationForm(Model model) {
             model.addAttribute("user", new User());
             return "register";
         }
 
-        // Обробляє запит на реєстрацію
         @PostMapping("/register")
         public String registerUser(@ModelAttribute("user") User user) {
+            user.setRole("USER");
             userService.register(user);
             return "redirect:/login";
         }
@@ -84,51 +98,58 @@ public class AppController implements WebMvcConfigurer {
     @Controller
     public class showUserPage {
 
-//        private AdresyDAO adresyDao;
-//
-//        public showUserPage(AdresyDAO adresyDao) {
-//            this.adresyDao = adresyDao;
-//        }
-//
-//        @RequestMapping(value = {"/main_user"})
-//        public String showUserPage(Model model) {
-//            model.addAttribute("adresyTable", adresyDao.list());
-//            return "user/main_user";
-//        }
-//
-//        @RequestMapping(value = "/newAddressRecord")
-//        public String addNewRecord(Model model) {
-//            model.addAttribute("adresy", new Adresy());
-//            return "user/newAddressRecord";
-//        }
-//
-//        @RequestMapping(value = "/save", method = RequestMethod.POST)
-//        public String save(@ModelAttribute("adresy") Adresy adresy) {
-//            adresyDao.save(adresy);
-//            return "redirect:/";
-//        }
-//
-//        @RequestMapping("/edit/{idadresu}")
-//        public ModelAndView showEditForm(@PathVariable(name = "idadresu") int idadresu) {
-//            ModelAndView mav = new ModelAndView("user/edit_form");
-//            Adresy adresy = adresyDao.get(idadresu);
-//            mav.addObject("adresy", adresy);
-//            return mav;
-//        }
-//
-//        @RequestMapping(value = "/update", method = RequestMethod.POST)
-//        public String update(@ModelAttribute("adresy") Adresy adresy){
-//            adresyDao.update(adresy);
-//            return "redirect:/";
-//        }
-//
-//        @RequestMapping("/delete/{IDADRESU}")
-//        public String delete(@PathVariable(name = "IDADRESU") int IDADRESU){
-//            adresyDao.delete(IDADRESU);
-//            return "redirect:/";
-//        }
-//
-//    }
+        private TowaryDAO towaryDAO;
+        @Controller
+        public class TowaryUserController {
+
+            private final TowaryDAO towaryDAO;
+
+            @Autowired
+            public TowaryUserController(TowaryDAO towaryDAO) {
+                this.towaryDAO = towaryDAO;
+            }
+
+            @GetMapping("/TowaryUser")
+            public String showTowaryUserPage(Model model) {
+                model.addAttribute("towaryTable", towaryDAO.list());
+                return "user/TowaryUser";
+            }
+        }
+
+        @Controller
+        public class ZamowieniaController {
+
+            private final TowaryDAO towaryDAO;
+            private final ZamowieniaDAO zamowieniaDAO;
+            // Припускаємо, що у вас є сервіс для отримання ID користувача
+            private final UserService userService;
+
+            @Autowired
+            public ZamowieniaController(TowaryDAO towaryDAO, ZamowieniaDAO zamowieniaDAO, UserService userService) {
+                this.towaryDAO = towaryDAO;
+                this.zamowieniaDAO = zamowieniaDAO;
+                this.userService = userService;
+            }
+
+            @PostMapping("/placeOrder")
+            public String placeOrder(@RequestParam("IDTowaru") int IDTowaru,
+                                     @RequestParam("quantity") int quantity,
+                                     HttpServletRequest request) {
+                Towary towary = towaryDAO.get(IDTowaru);
+                if (towary != null) {
+                    double totalPrice = towary.getCena() * quantity;
+                    Zamowienia zamowienia = new Zamowienia();
+                    zamowienia.setIDUser(userService.getCurrentUserId());
+                    zamowienia.setStatus("W trakcie realizacji");
+                    Date now = new Date();
+                    zamowienia.setData(new java.sql.Date(now.getTime()));
+                    zamowienia.setRabat(0);
+                    zamowieniaDAO.save(zamowienia);
+                }
+                return "redirect:/ZamowieniaUser"; // Redirect to the page with the order summary
+            }
+        }
+
 
     }
 }

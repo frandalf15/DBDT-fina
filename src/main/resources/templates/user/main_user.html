@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main User Page</title>
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="/">BDBT Spring Boot Project - Part II</a>
+        <a class="navbar-brand" href="/">BDBT Project Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -18,100 +18,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/index}">Home</a>
                 </li>
-
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Main
-                        <span class="sr-only">(current)</span>
-                    </a>
+                    <a class="nav-link" href="#">Dashboard</a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link" th:inline="text" style="color:lightskyblue;">You are logged in as <b
-                            style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></a>
+                    <a class="nav-link" style="color:lightsteelblue;">Signed in as <b>[[${#httpServletRequest.remoteUser}]]</b></a>
                 </li>
-
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container">
-    <div class="row">
-
-        <div class="col-md-10 mt-5">
-            <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome <a
-                            style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
-                </div>
-<!--                -->
-<!--                <div>-->
-<!--                    <h2 style="text-align: center">Adress table</h2>-->
-
-<!--                    &lt;!&ndash; Table &ndash;&gt;-->
-<!--                    <table border = "1" cellpadding = "10">-->
-<!--                        &lt;!&ndash; Table header &ndash;&gt;-->
-<!--                        <thead>-->
-<!--                        <tr> &lt;!&ndash; Table row &ndash;&gt;-->
-<!--                            <th>idadresu</th>-->
-<!--                            <th>miejscowosc</th>-->
-<!--                            <th>ulica</th>-->
-<!--                            <th>nrdomu</th>-->
-<!--                            <th>kodpocztowy</th>-->
-<!--                        </tr>-->
-<!--                        </thead>-->
-<!--                        &lt;!&ndash; Table body &ndash;&gt;-->
-<!--                        <tbody>-->
-<!--                        <tr th:each = "adresy : ${adresyTable}">-->
-<!--                            <td th:text = "${adresy.idadresu}">idadresu</td>-->
-<!--                            <td th:text = "${adresy.miejscowosc}">miejscowosc</td>-->
-<!--                            <td th:text = "${adresy.ulica}">ulica</td>-->
-<!--                            <td th:text = "${adresy.nrdomu}">nrdomu</td>-->
-<!--                            <td th:text = "${adresy.kodpocztowy}">kodpocztowy</td>-->
-
-<!--                            <td>-->
-<!--                                <a th:href="@{'/edit/' + ${adresy.idadresu}}">Edit</a>-->
-<!--                                &nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--                                <a th:href="@{'/delete/' + ${adresy.idadresu}}">Delete</a>-->
-<!--                            </td>-->
-
-<!--                        </tr>-->
-<!--                        </tbody>-->
-<!--                    </table>-->
-<!--                </div>-->
-
-
-                <div>
-                    <a th:href="@{'/Towary'}">Towary</a>
-                    <br>
-                    <a th:href="@{'/Zamowienia'}">Moje Zamówienia</a>
-                    <br>
-                    <a th:href="@{'/Oplaty'}">Opłaty</a>
-                </div>
-
-<!--                <a href="/newAddressRecord" style="text-align: center; text-decoration: none; font-size: larger"  >Add New Address</a>-->
-
-
-                <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
-
-
-            </form>
-        </div>
-
+<div class="container mt-4">
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
+        <p class="lead">This is your personalized dashboard where you can manage orders, and payments.</p>
+        <hr class="my-4">
+        <p>Use the buttons below to view details or log out.</p>
+        <a class="btn btn-info btn-lg" href="#" role="button" th:href="@{/TowaryUser}">View Products</a>
+        <a class="btn btn-info btn-lg" href="#" role="button" th:href="@{/ZamowieniaUser}">My Orders</a>
+        <a class="btn btn-info btn-lg" href="#" role="button" th:href="@{/OplatyUser}">Payments</a>
+        <form method="post" th:action="@{/logout}" class="mt-2">
+            <button class="btn btn-danger btn-lg" type="submit">Logout</button>
+        </form>
     </div>
 </div>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
+
+<script src="/webjars/jquery/jquery.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="/js/script.js" th:src="@{/js/script.js}"></script>
 
 </body>
 </html>
