@@ -19,6 +19,7 @@ public class Zamowienia {
     private int ILOSC;
     private Double TotalPrice;
 
+
     public Zamowienia(Date data, String status, Integer rabat, String reklamacja, int IDUser, int IDTowaru, int ILOSC) {
         Data = data;
         Status = status;

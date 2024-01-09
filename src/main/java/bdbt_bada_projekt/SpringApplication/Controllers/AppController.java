@@ -1,6 +1,7 @@
 package bdbt_bada_projekt.SpringApplication.Controllers;
 
 import bdbt_bada_projekt.SpringApplication.DAO.TowaryDAO;
+import bdbt_bada_projekt.SpringApplication.DAO.UserDAO;
 import bdbt_bada_projekt.SpringApplication.DAO.ZamowieniaDAO;
 import bdbt_bada_projekt.SpringApplication.Services.UserAlreadyExistsException;
 import bdbt_bada_projekt.SpringApplication.Services.UserService;
@@ -31,10 +32,8 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/main").setViewName("main");
         registry.addViewController("/login").setViewName("login");
-
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
         registry.addViewController("/main_user").setViewName("user/main_user");
-        registry.addViewController("/newAddressRecord").setViewName("user/newAddressRecord");
     }
 
     @Controller
@@ -57,10 +56,41 @@ public class AppController implements WebMvcConfigurer {
 
     @Controller
     public class showAdminPage {
+        @Autowired
+        private UserDAO userDAO;
+
+        @Autowired
+        private ZamowieniaDAO zamowieniaDAO;
+
         @RequestMapping(value = {"/main_admin"})
         public String showAdminPage(Model model) {
             return "admin/main_admin";
         }
+
+        @GetMapping("/Orders")
+        public String showZamowienieUserPage(Model model) {
+            model.addAttribute("ordersTable", zamowieniaDAO.list());
+            return "admin/Orders";
+        }
+
+        @PostMapping("/updateUserRole")
+        public String updateUserRole(@RequestParam("id") int id, @RequestParam("role") String role) {
+            User user = userDAO.get(id);
+            user.setRole(role);
+            userDAO.update(user);
+            return "redirect:/Users";
+        }
+        
+        @GetMapping("/Users")
+        public String showUsersAdminPage(Model model, Principal principal) {
+            User loggedInUser = userDAO.findByUsername(principal.getName());
+            int restrictedUserId = 31; // ID of the user you want to restrict.
+            model.addAttribute("loggedInUserId", loggedInUser.getId());
+            model.addAttribute("restrictedUserId", restrictedUserId);
+            model.addAttribute("usersTable", userDAO.list());
+            return "admin/Users";
+        }
+
     }
 
 
@@ -70,6 +100,9 @@ public class AppController implements WebMvcConfigurer {
         public String showAdminPage(Model model) {
             return "admin/main_staff";
         }
+
+
+
     }
 
 
@@ -92,6 +125,7 @@ public class AppController implements WebMvcConfigurer {
         @PostMapping("/register")
         public String registerUser(@ModelAttribute("user") User user, Model model) {
             try {
+                user.setRole("USER");
                 userService.register(user);
                 return "redirect:/login";
             } catch (UserAlreadyExistsException e) {
