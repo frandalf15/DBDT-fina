@@ -10,12 +10,14 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
 public class ZamowieniaDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     public ZamowieniaDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -45,7 +47,7 @@ public class ZamowieniaDAO {
         SimpleJdbcInsert insertAction = new SimpleJdbcInsert(jdbcTemplate);
         insertAction.withTableName("ZAMOWIENIA")
                 .usingGeneratedKeyColumns("IDZAMOWIENIA")
-                .usingColumns( "DATA", "STATUS", "IDUSER", "RABAT", "REKLAMACJA", "ILOSC", "IDTOWARU");
+                .usingColumns("DATA", "STATUS", "IDUSER", "RABAT", "REKLAMACJA", "ILOSC", "IDTOWARU");
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(zamowienia);
         Number id = insertAction.executeAndReturnKey(param);
         zamowienia.setIDZamowienia(id.intValue());
