@@ -2,6 +2,7 @@ package bdbt_bada_projekt.SpringApplication.Controllers;
 
 import bdbt_bada_projekt.SpringApplication.DAO.TowaryDAO;
 import bdbt_bada_projekt.SpringApplication.DAO.ZamowieniaDAO;
+import bdbt_bada_projekt.SpringApplication.Services.UserAlreadyExistsException;
 import bdbt_bada_projekt.SpringApplication.Services.UserService;
 import bdbt_bada_projekt.SpringApplication.models.Adresy;
 import bdbt_bada_projekt.SpringApplication.DAO.AdresyDAO;
@@ -89,11 +90,16 @@ public class AppController implements WebMvcConfigurer {
         }
 
         @PostMapping("/register")
-        public String registerUser(@ModelAttribute("user") User user) {
-            user.setRole("USER");
-            userService.register(user);
-            return "redirect:/login";
+        public String registerUser(@ModelAttribute("user") User user, Model model) {
+            try {
+                userService.register(user);
+                return "redirect:/login";
+            } catch (UserAlreadyExistsException e) {
+                model.addAttribute("error", "Username already taken");
+                return "register";
+            }
         }
+
     }
 
 
@@ -163,12 +169,13 @@ public class AppController implements WebMvcConfigurer {
                     Date now = new Date();
                     zamowienia.setData(new java.sql.Date(now.getTime()));
                     zamowienia.setRabat(0);
+                    zamowienia.setTotalPrice(totalPrice);
                     zamowieniaDAO.save(zamowienia);
                 }
-                return "redirect:/ZamowieniaUser"; // Redirect to the page with the order summary
+                return "redirect:/ZamowieniaUser";
             }
+
+
+
         }
-
-
-    }
-}
+}}

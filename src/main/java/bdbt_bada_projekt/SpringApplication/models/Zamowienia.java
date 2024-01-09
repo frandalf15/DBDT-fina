@@ -17,7 +17,7 @@ public class Zamowienia {
     private int IDTowaru;
     private String NAZWA;
     private int ILOSC;
-
+    private Double TotalPrice;
 
     public Zamowienia(Date data, String status, Integer rabat, String reklamacja, int IDUser, int IDTowaru, int ILOSC) {
         Data = data;
@@ -129,5 +129,13 @@ public class Zamowienia {
 
     public void setNAZWA(String NAZWA) {
         this.NAZWA = NAZWA;
+    }
+
+    public Double getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        TotalPrice = totalPrice;
     }
 }
