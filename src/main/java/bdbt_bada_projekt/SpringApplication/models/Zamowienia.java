@@ -14,37 +14,50 @@ public class Zamowienia {
     private Integer Rabat;
     private String Reklamacja;
     private int IDUser;
+    private int IDTowaru;
+    private String NAZWA;
+    private int ILOSC;
 
-    public Zamowienia(Date data, String status, Integer rabat, String reklamacja, int IDUser) {
+
+    public Zamowienia(Date data, String status, Integer rabat, String reklamacja, int IDUser, int IDTowaru, int ILOSC) {
         Data = data;
         Status = status;
         Rabat = rabat;
         Reklamacja = reklamacja;
         this.IDUser = IDUser;
+        this.IDTowaru = IDTowaru;
+        ILOSC = ILOSC;
+    }
+
+    public Zamowienia(Date data, String status, int IDUser, int IDTowaru, int ILOSC) {
+        Data = data;
+        Status = status;
+        this.IDUser = IDUser;
+        this.IDTowaru = IDTowaru;
+        this.ILOSC = ILOSC;
+    }
+
+    public Zamowienia(Date data, String status, String reklamacja, int IDUser, int IDTowaru, int ILOSC) {
+        Data = data;
+        Status = status;
+        Reklamacja = reklamacja;
+        this.IDUser = IDUser;
+        this.IDTowaru = IDTowaru;
+        this.ILOSC = ILOSC;
+    }
+
+    public Zamowienia(Date data, String status, Integer rabat, int IDUser, int IDTowaru, int ILOSC) {
+        Data = data;
+        Status = status;
+        Rabat = rabat;
+        this.IDUser = IDUser;
+        this.IDTowaru = IDTowaru;
+        this.ILOSC = ILOSC;
     }
 
     public Zamowienia() {
     }
 
-    public Zamowienia(Date data, String status, int IDUser) {
-        Data = data;
-        Status = status;
-        this.IDUser = IDUser;
-    }
-
-    public Zamowienia(Date data, String status, Integer rabat, int IDUser) {
-        Data = data;
-        Status = status;
-        Rabat = rabat;
-        this.IDUser = IDUser;
-    }
-
-    public Zamowienia(Date data, String status, String reklamacja, int IDUser) {
-        Data = data;
-        Status = status;
-        Reklamacja = reklamacja;
-        this.IDUser = IDUser;
-    }
 
     public int getIDZamowienia() {
         return IDZamowienia;
@@ -92,5 +105,29 @@ public class Zamowienia {
 
     public void setIDUser(int IDUser) {
         this.IDUser = IDUser;
+    }
+
+    public int getIDTowaru() {
+        return IDTowaru;
+    }
+
+    public void setIDTowaru(int IDTowaru) {
+        this.IDTowaru = IDTowaru;
+    }
+
+    public int getILOSC() {
+        return ILOSC;
+    }
+
+    public void setILOSC(int ILOSC) {
+        this.ILOSC = ILOSC;
+    }
+
+    public String getNAZWA() {
+        return NAZWA;
+    }
+
+    public void setNAZWA(String NAZWA) {
+        this.NAZWA = NAZWA;
     }
 }

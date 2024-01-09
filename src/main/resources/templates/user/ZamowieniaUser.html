@@ -37,12 +37,14 @@
 </nav>
 
 <div class="container mt-4">
-    <h2 class="text-center mb-3">Towary</h2>
+    <h2 class="text-center mb-3">Moje Zamówienia</h2>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
+                <th>NAZWA</th>
+                <th>Ilośc</th>
                 <th>Data</th>
                 <th>Status</th>
                 <th>Rabat</th>
@@ -52,6 +54,8 @@
             <tbody>
             <tr th:each="zamowienie : ${zamowienieTable}">
                 <td th:text="${zamowienie.IDZamowienia}"></td>
+                <td th:text="${zamowienie.NAZWA}"></td>
+                <td th:text="${zamowienie.ILOSC}"></td>
                 <td th:text="${zamowienie.Data}"></td>
                 <td th:text="${zamowienie.Status}"></td>
                 <td th:text="${zamowienie.Rabat}"></td>

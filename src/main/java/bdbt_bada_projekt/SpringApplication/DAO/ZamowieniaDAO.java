@@ -1,6 +1,5 @@
 package bdbt_bada_projekt.SpringApplication.DAO;
 
-import bdbt_bada_projekt.SpringApplication.models.User;
 import bdbt_bada_projekt.SpringApplication.models.Zamowienia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,7 +10,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
@@ -28,24 +26,26 @@ public class ZamowieniaDAO {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Zamowienia.class));
     }
 
-
     public List<Zamowienia> list(Authentication auth) {
         if (auth != null && auth.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             String username = userDetails.getUsername(); // This will give you the username as a String
 
-            String sql = "SELECT * FROM ZAMOWIENIA WHERE IDUSER = (SELECT ID FROM USERS WHERE USERNAME = ?)";
+            // Оновлений SQL запит з JOIN для отримання поля NAZWA з таблиці TOWARY
+            String sql = "SELECT z.*, t.NAZWA FROM ZAMOWIENIA z " +
+                    "JOIN TOWARY t ON z.IDTOWARU = t.IDTOWARU " +
+                    "WHERE z.IDUSER = (SELECT ID FROM USERS WHERE USERNAME = ?)";
             return jdbcTemplate.query(sql, new Object[]{username}, BeanPropertyRowMapper.newInstance(Zamowienia.class));
         }
         return null;
     }
 
+
     public void save(Zamowienia zamowienia) {
         SimpleJdbcInsert insertAction = new SimpleJdbcInsert(jdbcTemplate);
         insertAction.withTableName("ZAMOWIENIA")
                 .usingGeneratedKeyColumns("IDZAMOWIENIA")
-                .usingColumns( "DATA", "STATUS", "IDUSER", "RABAT", "REKLAMACJA");
-
+                .usingColumns( "DATA", "STATUS", "IDUSER", "RABAT", "REKLAMACJA", "ILOSC", "IDTOWARU");
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(zamowienia);
         Number id = insertAction.executeAndReturnKey(param);
         zamowienia.setIDZamowienia(id.intValue());
@@ -59,13 +59,12 @@ public class ZamowieniaDAO {
 
     public void update(Zamowienia zamowienia) {
         String sql = "UPDATE ZAMOWIENIA SET DATA=:data, STATUS=:status, IDUSER=:IDUSER, " +
-                "RABAT=:rabat, REKLAMACJA=:reklamacja WHERE IDZAMOWIENIA=:IDZamowienia";
+                "RABAT=:rabat, REKLAMACJA=:reklamacja, IDTOWARU=:IDTOWARU, ILOSC=:QUANTITY WHERE IDZAMOWIENIA=:IDZamowienia";
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(zamowienia);
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
 
         template.update(sql, param);
     }
-
 
     public void delete(int IDZAMOWIENIA) {
         String sql = "DELETE FROM ZAMOWIENIA WHERE IDZAMOWIENIA = ?";

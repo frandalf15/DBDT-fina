@@ -139,7 +139,6 @@ public class AppController implements WebMvcConfigurer {
 
             private final TowaryDAO towaryDAO;
             private final ZamowieniaDAO zamowieniaDAO;
-            // Припускаємо, що у вас є сервіс для отримання ID користувача
             private final UserService userService;
 
             @Autowired
@@ -158,6 +157,8 @@ public class AppController implements WebMvcConfigurer {
                     double totalPrice = towary.getCena() * quantity;
                     Zamowienia zamowienia = new Zamowienia();
                     zamowienia.setIDUser(userService.getCurrentUserId());
+                    zamowienia.setILOSC(quantity);
+                    zamowienia.setIDTowaru(IDTowaru);
                     zamowienia.setStatus("W trakcie realizacji");
                     Date now = new Date();
                     zamowienia.setData(new java.sql.Date(now.getTime()));

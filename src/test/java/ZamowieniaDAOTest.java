@@ -35,7 +35,7 @@ class ZamowieniaDAOTest {
 
     @Test
     void save() {
-        Zamowienia zamowienia = new Zamowienia(Date.valueOf("2024-01-03"), "Odrzucone",4);
+        Zamowienia zamowienia = new Zamowienia(Date.valueOf("2024-01-03"), "Odrzucone",4,1,1);
         dao.save(zamowienia);
     }
 
