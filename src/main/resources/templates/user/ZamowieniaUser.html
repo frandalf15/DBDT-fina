@@ -3,8 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Moje Zamówienia</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/" th:href="@{/}">BDBT Project Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/index}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/main_user}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:inline="text">Signed in as <b>[[${#httpServletRequest.remoteUser}]]</b></a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" th:action="@{/logout}" class="form-inline">
+                        <button class="btn btn-danger" type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-3">Towary</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Rabat</th>
+                <th>Reklamacja</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="zamowienie : ${zamowienieTable}">
+                <td th:text="${zamowienie.IDZamowienia}"></td>
+                <td th:text="${zamowienie.Data}"></td>
+                <td th:text="${zamowienie.Status}"></td>
+                <td th:text="${zamowienie.Rabat}"></td>
+                <td th:text="${zamowienie.Reklamacja}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="/webjars/jquery/jquery.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
 </body>
 </html>
+

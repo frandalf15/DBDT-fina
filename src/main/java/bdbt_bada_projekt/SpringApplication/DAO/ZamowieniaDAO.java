@@ -1,5 +1,6 @@
 package bdbt_bada_projekt.SpringApplication.DAO;
 
+import bdbt_bada_projekt.SpringApplication.models.User;
 import bdbt_bada_projekt.SpringApplication.models.Zamowienia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -7,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +26,18 @@ public class ZamowieniaDAO {
     public List<Zamowienia> list() {
         String sql = "SELECT * FROM ZAMOWIENIA";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Zamowienia.class));
+    }
+
+
+    public List<Zamowienia> list(Authentication auth) {
+        if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            String username = userDetails.getUsername(); // This will give you the username as a String
+
+            String sql = "SELECT * FROM ZAMOWIENIA WHERE IDUSER = (SELECT ID FROM USERS WHERE USERNAME = ?)";
+            return jdbcTemplate.query(sql, new Object[]{username}, BeanPropertyRowMapper.newInstance(Zamowienia.class));
+        }
+        return null;
     }
 
     public void save(Zamowienia zamowienia) {

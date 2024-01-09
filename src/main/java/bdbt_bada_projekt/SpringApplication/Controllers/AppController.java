@@ -10,6 +10,8 @@ import bdbt_bada_projekt.SpringApplication.models.User;
 import bdbt_bada_projekt.SpringApplication.models.Zamowienia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Date;
 import java.sql.Timestamp;
 @Configuration
@@ -94,19 +97,31 @@ public class AppController implements WebMvcConfigurer {
     }
 
 
-
     @Controller
     public class showUserPage {
 
         private TowaryDAO towaryDAO;
+        private ZamowieniaDAO zamowieniaDAO;
+
+
         @Controller
         public class TowaryUserController {
-
             private final TowaryDAO towaryDAO;
 
+            private final ZamowieniaDAO zamowieniaDAO;
+
+            @GetMapping("/ZamowieniaUser")
+            public String showZamowienieUserPage(Model model) {
+                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                model.addAttribute("zamowienieTable", zamowieniaDAO.list(auth));
+                return "user/ZamowieniaUser";
+            }
+
+
             @Autowired
-            public TowaryUserController(TowaryDAO towaryDAO) {
+            public TowaryUserController(TowaryDAO towaryDAO, ZamowieniaDAO zamowieniaDAO) {
                 this.towaryDAO = towaryDAO;
+                this.zamowieniaDAO = zamowieniaDAO;
             }
 
             @GetMapping("/TowaryUser")
@@ -114,6 +129,9 @@ public class AppController implements WebMvcConfigurer {
                 model.addAttribute("towaryTable", towaryDAO.list());
                 return "user/TowaryUser";
             }
+
+
+
         }
 
         @Controller
