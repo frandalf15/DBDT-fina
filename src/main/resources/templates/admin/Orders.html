@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Orders</title>
-    <title>Users</title><link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 <body>
 
@@ -45,13 +44,13 @@
                 <th>ID</th>
                 <th>IDKLIENTA</th>
                 <th>NAZWA</th>
-                <th>Ilośc</th>
+                <th>Ilość</th>
                 <th>Cena</th>
                 <th>Data</th>
                 <th>Status</th>
                 <th>Rabat</th>
                 <th>Reklamacja</th>
-
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -59,18 +58,28 @@
                 <td th:text="${zamowienie.IDZamowienia}"></td>
                 <td th:text="${zamowienie.IDUser}"></td>
                 <td th:text="${zamowienie.NAZWA}"></td>
-                <td th:text="${zamowienie.ILOSC}"></td>
+                <td th:text="${zamowienie.ILOSC}" /></td>
                 <td th:text="${zamowienie.TotalPrice}"></td>
                 <td th:text="${zamowienie.Data}"></td>
-                <td th:text="${zamowienie.Status}"></td>
+                <td>
+                    <select name="status">
+                        <option th:selected="${zamowienie.Status == 'Zrealizowane'}" value="Zrealizowane">Zrealizowane</option>
+                        <option th:selected="${zamowienie.Status == 'W trakcie realizacji'}" value="W trakcie realizacji">W trakcie realizacji</option>
+                        <option th:selected="${zamowienie.Status == 'Zwrocone'}" value="Zwrocone">Zwrocone</option>
+                        <option th:selected="${zamowienie.Status == 'Odrzucone'}" value="Odrzucone">Odrzucone</option>
+                    </select>
+                </td>
                 <td th:text="${zamowienie.Rabat}"></td>
                 <td th:text="${zamowienie.Reklamacja}"></td>
+                <td>
+                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-
 
 <script src="/webjars/jquery/jquery.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -78,4 +87,3 @@
 
 </body>
 </html>
-

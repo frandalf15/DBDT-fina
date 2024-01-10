@@ -62,6 +62,9 @@ public class AppController implements WebMvcConfigurer {
         @Autowired
         private ZamowieniaDAO zamowieniaDAO;
 
+        @Autowired
+        private TowaryDAO towaryDAO;
+
         @RequestMapping(value = {"/main_admin"})
         public String showAdminPage(Model model) {
             return "admin/main_admin";
@@ -80,7 +83,7 @@ public class AppController implements WebMvcConfigurer {
             userDAO.update(user);
             return "redirect:/Users";
         }
-        
+
         @GetMapping("/Users")
         public String showUsersAdminPage(Model model, Principal principal) {
             User loggedInUser = userDAO.findByUsername(principal.getName());
@@ -89,6 +92,45 @@ public class AppController implements WebMvcConfigurer {
             model.addAttribute("restrictedUserId", restrictedUserId);
             model.addAttribute("usersTable", userDAO.list());
             return "admin/Users";
+        }
+
+        @PostMapping("/updateOrder")
+        public String updateOrder(@RequestParam("id") int id,
+                                  @RequestParam("ilosc") int ilosc,
+                                  @RequestParam("status") String status) {
+            Zamowienia zamowienie = zamowieniaDAO.get(id);
+            if (zamowienie != null) {
+                zamowienie.setILOSC(ilosc);
+                zamowienie.setStatus(status);
+                zamowieniaDAO.update(zamowienie);
+            }
+            return "redirect:/Orders";
+        }
+
+
+        @GetMapping("/Towary")
+        public String showZamowienieAdminPage(Model model) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            model.addAttribute("productsTable", towaryDAO.list());
+            return "admin/Towary";
+        }
+
+        @PostMapping("/addProduct")
+        public String addProduct(Towary product) {
+            towaryDAO.save(product);
+            return "redirect:/Towary";
+        }
+
+        @PostMapping("/updateProduct")
+        public String updateProduct(Towary product) {
+            towaryDAO.update(product);
+            return "redirect:/Towary";
+        }
+
+        @PostMapping("/deleteProduct")
+        public String deleteProduct(@RequestParam("idTowaru") int idTowaru) {
+            towaryDAO.delete(idTowaru);
+            return "redirect:/Towary";
         }
 
     }

@@ -60,11 +60,9 @@ public class ZamowieniaDAO {
     }
 
     public void update(Zamowienia zamowienia) {
-        String sql = "UPDATE ZAMOWIENIA SET DATA=:data, STATUS=:status, IDUSER=:IDUSER, " +
-                "RABAT=:rabat, REKLAMACJA=:reklamacja, IDTOWARU=:IDTOWARU, ILOSC=:QUANTITY, TOTALPRICE=:TOTALPRICE WHERE IDZAMOWIENIA=:IDZamowienia";
+        String sql = "UPDATE ZAMOWIENIA SET STATUS=:status WHERE IDZAMOWIENIA=:IDZamowienia";
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(zamowienia);
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
-
         template.update(sql, param);
     }
 

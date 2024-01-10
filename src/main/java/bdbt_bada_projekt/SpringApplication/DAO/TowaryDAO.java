@@ -28,10 +28,12 @@ public class TowaryDAO {
 
     public void save(Towary towary) {
         SimpleJdbcInsert insertAction = new SimpleJdbcInsert(jdbcTemplate);
-        insertAction.withTableName("TOWARY").usingColumns("IDTOWARU", "NAZWA", "CENA", "PRODUCENT", "TYPINSTALACJI", "DOSTAWCA", "RODZAJTOWARU");
-
+        insertAction.withTableName("TOWARY")
+                .usingGeneratedKeyColumns("IDTOWARU")
+                .usingColumns( "NAZWA", "CENA", "TYPINSTALACJI", "RODZAJTOWARU");
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(towary);
-        insertAction.execute(param);
+        Number id = insertAction.executeAndReturnKey(param);
+        towary.setIDTowaru(id.intValue());
     }
 
     public Towary get(int IDTOWARU) {
@@ -44,8 +46,7 @@ public class TowaryDAO {
 
     public void update(Towary towary) {
         String sql = "UPDATE TOWARY SET NAZWA=:nazwa, CENA=:cena, " +
-                "TYPINSTALACJI=:typinstalacji, RODZAJTOWARU=:rodzajtowaru, IDPRODUCENTA=:idproducenta, " +
-                "IDDOSTAWCY=:iddostawcy, IDMAGAZYNU=:idmagazynu  WHERE IDTOWARU=:idtowaru";
+                "TYPINSTALACJI=:typinstalacji, RODZAJTOWARU=:rodzajtowaru WHERE IDTOWARU=:idtowaru";
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(towary);
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
 

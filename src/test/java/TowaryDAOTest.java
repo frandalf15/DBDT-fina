@@ -32,7 +32,7 @@ class TowaryDAOTest {
 
     @Test
     void save() {
-        Towary towary = new Towary(10, "Rezystor test", 8.5, "przewklekany", "Pasywny", 1,1,1);
+        Towary towary = new Towary( "Rezystor test", 8.5, "przewklekany", "Pasywny", 1);
         dao.save(towary);
     }
 
@@ -47,7 +47,6 @@ class TowaryDAOTest {
         Towary towary = new Towary();
         towary.setIDTowaru(11);
         towary.setCena(8.5);
-        towary.setIDDostawcy(1);
         towary.setIDProducenta(1);
         towary.setNazwa("Rezystor test");
         towary.setRodzajTowaru("Pasywny");

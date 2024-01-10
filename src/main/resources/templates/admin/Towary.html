@@ -2,12 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Towary</title>
-    <title>Users</title><link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <title>Products</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 <body>
 
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">BDBT Project Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/index}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:lightsteelblue;">Signed in as <b>[[${#httpServletRequest.remoteUser}]]</b></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+
+<div class="container mt-4">
+    <h2 class="text-center mb-3">Products</h2>
+
+    <!-- Add Product Form -->
+    <div class="row mb-4">
+        <div class="col">
+            <form th:action="@{/addProduct}" method="post" class="form-inline justify-content-center">
+                <input type="text" name="nazwa" placeholder="Nazwa" required class="form-control mr-2" />
+                <input type="number" name="cena" placeholder="Cena" required class="form-control mr-2" />
+                <select name="typInstalacji" class="form-control mr-2">
+                    <option value="powierzchniowy">powierzchniowy</option>
+                    <option value="przewlekany">przewlekany</option>
+                    <option value="mieszany">mieszany</option>
+                </select>
+                <select name="rodzajTowaru" class="form-control mr-2">
+                    <option value="Zrodlo">Zrodlo</option>
+                    <option value="Bezzrodlowy">Bezzrodlowy</option>
+                    <option value="Pasywny">Pasywny</option>
+                    <option value="Bezstratny">Bezstratny</option>
+                    <option value="Nieczynny">Nieczynny</option>
+                    <option value="Beznieczynny">Beznieczynny</option>
+                </select>
+                <input type="number" name="cena" placeholder="IDMAGAZYNU" required class="form-control mr-2" />
+
+                <button type="submit" class="btn btn-success">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>IDTOWARU</th>
+                <th>NAZWA</th>
+                <th>CENA</th>
+                <th>TYPINSTALACJI</th>
+                <th>RODZAJTOWARU</th>
+                <th>IDMAGAZYNU</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${productsTable}">
+                <td th:text="${product.IDTowaru}"></td>
+                <td th:text="${product.Nazwa}"></td>
+                <td th:text="${product.Cena}"></td>
+                <td th:text="${product.TypInstalacji}"></td>
+                <td th:text="${product.RodzajTowaru}"></td>
+                <td th:text="${product.IDMagazynu}"></td>
+                <td>
+                    <!-- Update and Delete buttons here -->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
 </html>
