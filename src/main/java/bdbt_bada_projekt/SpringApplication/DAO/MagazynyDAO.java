@@ -50,4 +50,13 @@ public class MagazynyDAO {
         jdbcTemplate.update(sql, IDMAGAZYNU);
     }
 
+    public void deleteCascade(int IDMAGAZYNU) {
+
+        String sqlDeleteRelated = "DELETE FROM TOWARY WHERE IDMAGAZYNU = ?";
+        jdbcTemplate.update(sqlDeleteRelated, IDMAGAZYNU);
+
+        String sqlDeleteMagazyn = "DELETE FROM magazyny WHERE IDMAGAZYNU = ?";
+        jdbcTemplate.update(sqlDeleteMagazyn, IDMAGAZYNU);
+    }
+
 }

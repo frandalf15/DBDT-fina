@@ -102,7 +102,7 @@
                 <td>
                     <form th:action="@{/deleteMagazyn}" method="post">
                         <input type="hidden" name="idmagazynu" th:value="${magazyn.idmagazynu}"/>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this.form)">Delete</button>
                     </form>
                     <a th:href="@{'admin/editMagazyn/' + ${magazyn.idmagazynu}}" class="btn btn-info">Edit</a>
                 </td>
@@ -112,6 +112,15 @@
     </div>
 </div>
 </div>
+
+<script>
+    function confirmDelete(form) {
+        var confirmation = confirm("Czy na pewno chcesz usunąć ten magazyn i wszystkie powiązane dane?");
+        if (confirmation) {
+            form.submit();
+        }
+    }
+</script>
 
 <script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

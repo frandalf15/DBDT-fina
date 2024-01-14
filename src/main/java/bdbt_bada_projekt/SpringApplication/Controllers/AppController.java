@@ -142,7 +142,7 @@ public class AppController implements WebMvcConfigurer {
         }
         @PostMapping("/deleteMagazyn")
         public String deleteMagazyn(@RequestParam("idmagazynu") int idmagazynu) {
-            magazynyDAO.delete(idmagazynu);
+            magazynyDAO.deleteCascade(idmagazynu);
             return "redirect:/Magazyny";
         }
 

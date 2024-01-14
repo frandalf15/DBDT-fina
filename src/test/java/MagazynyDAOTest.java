@@ -54,4 +54,11 @@ class MagazynyDAOTest {
         int id = 3;
         dao.delete(id);
     }
+    @Test
+    void deleteCascade() {
+        int id = 11;
+        dao.deleteCascade(id);
+    }
+
+
 }
