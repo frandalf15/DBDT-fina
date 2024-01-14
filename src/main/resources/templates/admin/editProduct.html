@@ -10,37 +10,54 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="/">BDBT Project Dashboard</a>
+    <a class="navbar-brand" href="/" th:href="@{/main_admin}">BDBT Project Dashboard</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive"
-            aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
 
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Dashboard</a>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/main_admin}">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="color:lightsteelblue;">Signed in as <b>[[${#httpServletRequest.remoteUser}]]</b></a>
+          <a class="nav-link" th:inline="text">Signed in as <b>[[${#httpServletRequest.remoteUser}]]</b></a>
+        </li>
+        <li class="nav-item">
+          <form method="post" th:action="@{/logout}" class="form-inline">
+            <button class="btn btn-danger" type="submit">Logout</button>
+          </form>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
+
 <div class="container mt-4">
-  <h2>Edit Product</h2>
+  <div class="card">
+    <div class="card-header">
+      <h2 class="text-center">Edit Product</h2>
+    </div>
+    <div class="card-body">
   <form th:action="@{/updateProduct}" method="post">
     <input type="hidden" name="IDTowaru" th:value="${product.IDTowaru}" />
+
+    <div class="form-group">
     <input type="text" name="nazwa" th:value="${product.nazwa}" class="form-control mb-2"/>
+    </div>
+    <div class="form-group">
     <input type="number" name="cena" th:value="${product.cena}" class="form-control mb-2"/>
+    </div>
+    <div class="form-group">
     <select name="TypInstalacji" class="form-control mr-2">
       <option value="powierzchniowy" th:selected="${product.typInstalacji == 'powierzchniowy'}">powierzchniowy</option>
       <option value="przewlekany" th:selected="${product.typInstalacji == 'przewlekany'}">przewlekany</option>
       <option value="mieszany" th:selected="${product.typInstalacji == 'mieszany'}">mieszany</option>
     </select>
+    </div>
+    <div class="form-group">
     <select name="RodzajTowaru" class="form-control mr-2">
       <option value="Zrodlo" th:selected="${product.rodzajTowaru == 'Zrodlo'}">Zrodlo</option>
       <option value="Bezzrodlowy" th:selected="${product.rodzajTowaru == 'Bezzrodlowy'}">Bezzrodlowy</option>
@@ -49,9 +66,15 @@
       <option value="Nieczynny" th:selected="${product.rodzajTowaru == 'Nieczynny'}">Nieczynny</option>
       <option value="Beznieczynny" th:selected="${product.rodzajTowaru == 'Beznieczynny'}">Beznieczynny</option>
     </select>
+    </div>
+    <div class="form-group">
     <input type="number" name="IDMagazynu" placeholder="IDMagazynu" required class="form-control mr-2"/>
+    </div>
+
     <button type="submit" class="btn btn-primary">Update Product</button>
   </form>
+    </div>
+  </div>
 </div>
 </body>
 </html>
