@@ -126,7 +126,7 @@ public class AppController implements WebMvcConfigurer {
 
         @PostMapping("/updateProduct")
         public String updateProduct(@ModelAttribute Towary product) {
-            towaryDAO.save(product);
+            towaryDAO.update(product);
             return "redirect:/Towary";
         }
 

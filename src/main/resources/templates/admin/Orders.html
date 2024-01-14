@@ -49,7 +49,6 @@
                     <th>Cena</th>
                     <th>Data</th>
                     <th>Rabat</th>
-                    <th>Reklamacja</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -64,7 +63,6 @@
                         <td th:text="${zamowienie.TotalPrice}"></td>
                         <td th:text="${zamowienie.Data}"></td>
                         <td th:text="${zamowienie.Rabat}"></td>
-                        <td th:text="${zamowienie.Reklamacja}"></td>
                         <td>
                             <input type="hidden" name="IDZamowienia" th:value="${zamowienie.IDZamowienia}"/>
                             <select name="Status">
