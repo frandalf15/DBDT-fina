@@ -62,9 +62,15 @@ public class RabatyDAO {
 
 
     public Rabaty findByNazwa(String nazwa) {
-        String sql = "SELECT * FROM Rabaty WHERE nazwa = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{nazwa}, new RabatyRowMapper());
+        try {
+            String sql = "SELECT * FROM Rabaty WHERE nazwa = ?";
+            return jdbcTemplate.queryForObject(sql, new Object[]{nazwa}, new RabatyRowMapper());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
     private static final class RabatyRowMapper implements RowMapper<Rabaty> {
         @Override
         public Rabaty mapRow(ResultSet rs, int rowNum) throws SQLException {
