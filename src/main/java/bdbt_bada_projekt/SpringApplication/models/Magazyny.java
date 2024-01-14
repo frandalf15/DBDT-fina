@@ -1,39 +1,42 @@
 package bdbt_bada_projekt.SpringApplication.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "MAGAZYNY")
 public class Magazyny {
-
-    private int id_magazynu;
-    private String nazma;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idmagazynu;
+    private String nazwa;
     private String email;
-    private String numer_telefonu;
-    private int id_adresu;
+    private String telefon;
 
-    public Magazyny(int id_magazynu, String nazma, String email, String numer_telefonu, int id_adresu) {
+    public Magazyny(int id_magazynu, String nazwa, String email, String telefon) {
         super();
-        this.id_magazynu = id_magazynu;
-        this.nazma = nazma;
+        this.idmagazynu = id_magazynu;
+        this.nazwa = nazwa;
         this.email = email;
-        this.numer_telefonu = numer_telefonu;
-        this.id_adresu = id_adresu;
+        this.telefon = telefon;
     }
 
     public Magazyny() {
     }
 
-    public int getId_magazynu() {
-        return id_magazynu;
+    public int getIdmagazynu() {
+        return idmagazynu;
     }
 
-    public void setId_magazynu(int id_magazynu) {
-        this.id_magazynu = id_magazynu;
+    public void setIdmagazynu(int idmagazynu) {
+        this.idmagazynu = idmagazynu;
     }
 
-    public String getNazma() {
-        return nazma;
+    public String getNazwa() {
+        return nazwa;
     }
 
-    public void setNazma(String nazma) {
-        this.nazma = nazma;
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
     }
 
     public String getEmail() {
@@ -44,30 +47,22 @@ public class Magazyny {
         this.email = email;
     }
 
-    public String getNumer_telefonu() {
-        return numer_telefonu;
+    public String getTelefon() {
+        return telefon;
     }
 
-    public void setNumer_telefonu(String numer_telefonu) {
-        this.numer_telefonu = numer_telefonu;
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
     }
 
-    public int getId_adresu() {
-        return id_adresu;
-    }
-
-    public void setId_adresu(int id_adresu) {
-        this.id_adresu = id_adresu;
-    }
 
     @Override
     public String toString() {
         return "Magazyny{" +
-                "id_magazynu=" + id_magazynu +
-                ", nazma='" + nazma + '\'' +
+                "id_magazynu=" + idmagazynu +
+                ", nazma='" + nazwa + '\'' +
                 ", email='" + email + '\'' +
-                ", numer_telefonu='" + numer_telefonu + '\'' +
-                ", id_adresu=" + id_adresu +
+                ", numer_telefonu='" + telefon + '\'' +
                 '}';
     }
 }

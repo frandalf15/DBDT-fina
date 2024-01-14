@@ -30,11 +30,11 @@ class TowaryDAOTest {
         assertFalse(towaryList.isEmpty());
     }
 
-    @Test
-    void save() {
-        Towary towary = new Towary( "Rezystor test", 8.5, "przewklekany", "Pasywny", 1);
-        dao.save(towary);
-    }
+//    @Test
+//    void save() {
+//        Towary towary = new Towary( "Rezystor test", 8.5, "przewklekany", "Pasywny", 1);
+//        dao.save(towary);
+//    }
 
     void get() {
         int id = 5;
@@ -45,13 +45,15 @@ class TowaryDAOTest {
     @Test
     void update() {
         Towary towary = new Towary();
-        towary.setIDTowaru(11);
+
+        towary.setIDTowaru(9);
         towary.setCena(8.5);
-        towary.setIDProducenta(1);
         towary.setNazwa("Rezystor test");
         towary.setRodzajTowaru("Pasywny");
-        towary.setTypInstalacji("hz");
-        towary.setIDMagazynu(1);
+        towary.setTypInstalacji("przewlekany");
+        towary.setIDMagazynu(2);
+
+        dao.update(towary);
     }
 
     @Test

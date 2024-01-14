@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<div class="container mt-4">
+  <h2>Edit Product</h2>
+  <form th:action="@{/updateProduct}" method="post">
+    <input type="hidden" name="IDTowaru" th:value="${product.IDTowaru}" />
+    <input type="text" name="nazwa" th:value="${product.nazwa}" class="form-control mb-2"/>
+    <input type="number" name="cena" th:value="${product.cena}" class="form-control mb-2"/>
+    <select name="TypInstalacji" class="form-control mr-2">
+      <option value="powierzchniowy" th:selected="${product.typInstalacji == 'powierzchniowy'}">powierzchniowy</option>
+      <option value="przewlekany" th:selected="${product.typInstalacji == 'przewlekany'}">przewlekany</option>
+      <option value="mieszany" th:selected="${product.typInstalacji == 'mieszany'}">mieszany</option>
+    </select>
+    <select name="RodzajTowaru" class="form-control mr-2">
+      <option value="Zrodlo" th:selected="${product.rodzajTowaru == 'Zrodlo'}">Zrodlo</option>
+      <option value="Bezzrodlowy" th:selected="${product.rodzajTowaru == 'Bezzrodlowy'}">Bezzrodlowy</option>
+      <option value="Pasywny" th:selected="${product.rodzajTowaru == 'Pasywny'}">Pasywny</option>
+      <option value="Bezstratny" th:selected="${product.rodzajTowaru == 'Bezstratny'}">Bezstratny</option>
+      <option value="Nieczynny" th:selected="${product.rodzajTowaru == 'Nieczynny'}">Nieczynny</option>
+      <option value="Beznieczynny" th:selected="${product.rodzajTowaru == 'Beznieczynny'}">Beznieczynny</option>
+    </select>
+    <input type="number" name="IDMagazynu" placeholder="IDMagazynu" required class="form-control mr-2"/>
+    <button type="submit" class="btn btn-primary">Update Product</button>
+  </form>
+</div>
+</body>
+</html>

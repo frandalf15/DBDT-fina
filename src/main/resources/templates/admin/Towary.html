@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 <body>
 
@@ -40,14 +41,14 @@
     <div class="row mb-4">
         <div class="col">
             <form th:action="@{/addProduct}" method="post" class="form-inline justify-content-center">
-                <input type="text" name="nazwa" placeholder="Nazwa" required class="form-control mr-2" />
-                <input type="number" name="cena" placeholder="Cena" required class="form-control mr-2" />
-                <select name="typInstalacji" class="form-control mr-2">
+                <input type="text" name="nazwa" placeholder="Nazwa" required class="form-control mr-2"/>
+                <input type="number" name="cena" placeholder="Cena" required class="form-control mr-2"/>
+                <select name="TypInstalacji" class="form-control mr-2">
                     <option value="powierzchniowy">powierzchniowy</option>
                     <option value="przewlekany">przewlekany</option>
                     <option value="mieszany">mieszany</option>
                 </select>
-                <select name="rodzajTowaru" class="form-control mr-2">
+                <select name="RodzajTowaru" class="form-control mr-2">
                     <option value="Zrodlo">Zrodlo</option>
                     <option value="Bezzrodlowy">Bezzrodlowy</option>
                     <option value="Pasywny">Pasywny</option>
@@ -55,13 +56,12 @@
                     <option value="Nieczynny">Nieczynny</option>
                     <option value="Beznieczynny">Beznieczynny</option>
                 </select>
-                <input type="number" name="cena" placeholder="IDMAGAZYNU" required class="form-control mr-2" />
-
+                <input type="number" name="IDMagazynu" placeholder="IDMagazynu" required class="form-control mr-2"/>
                 <button type="submit" class="btn btn-success">Add Product</button>
             </form>
         </div>
     </div>
-
+<!--table-->
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead class="thead-dark">
@@ -78,13 +78,17 @@
             <tbody>
             <tr th:each="product : ${productsTable}">
                 <td th:text="${product.IDTowaru}"></td>
-                <td th:text="${product.Nazwa}"></td>
-                <td th:text="${product.Cena}"></td>
-                <td th:text="${product.TypInstalacji}"></td>
+                <td th:text="${product.nazwa}"></td>
+                <td th:text="${product.cena}"></td>
+                <td th:text="${product.typInstalacji}"></td>
                 <td th:text="${product.RodzajTowaru}"></td>
                 <td th:text="${product.IDMagazynu}"></td>
                 <td>
-                    <!-- Update and Delete buttons here -->
+                    <form th:action="@{/deleteProduct}" method="post">
+                        <input type="hidden" name="idTowaru" th:value="${product.IDTowaru}"/>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <a th:href="@{/editProduct/{id}(id=${product.IDTowaru})}" class="btn btn-primary">Edit</a>
                 </td>
             </tr>
             </tbody>
@@ -92,9 +96,11 @@
     </div>
 </div>
 
-<script src="/webjars/jquery/jquery.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
 <script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

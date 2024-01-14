@@ -40,9 +40,18 @@ class MagazynyDAOTest {
 
     @Test
     void update() {
+        Magazyny magazyny = new Magazyny();
+        magazyny.setIdmagazynu(2);
+        magazyny.setNazwa("testupdate");
+        magazyny.setTelefon("3333");
+        magazyny.setEmail("2323");
+
+        dao.update(magazyny);
     }
 
     @Test
     void delete() {
+        int id = 3;
+        dao.delete(id);
     }
 }

@@ -1,21 +1,17 @@
 package bdbt_bada_projekt.SpringApplication.Controllers;
 
-import bdbt_bada_projekt.SpringApplication.DAO.TowaryDAO;
-import bdbt_bada_projekt.SpringApplication.DAO.UserDAO;
-import bdbt_bada_projekt.SpringApplication.DAO.ZamowieniaDAO;
+import bdbt_bada_projekt.SpringApplication.DAO.*;
 import bdbt_bada_projekt.SpringApplication.Services.UserAlreadyExistsException;
 import bdbt_bada_projekt.SpringApplication.Services.UserService;
-import bdbt_bada_projekt.SpringApplication.models.Adresy;
-import bdbt_bada_projekt.SpringApplication.DAO.AdresyDAO;
-import bdbt_bada_projekt.SpringApplication.models.Towary;
-import bdbt_bada_projekt.SpringApplication.models.User;
-import bdbt_bada_projekt.SpringApplication.models.Zamowienia;
+import bdbt_bada_projekt.SpringApplication.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -24,9 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Date;
 import java.sql.Timestamp;
+
 @Configuration
 public class AppController implements WebMvcConfigurer {
-
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/").setViewName("index");
@@ -53,7 +49,6 @@ public class AppController implements WebMvcConfigurer {
         }
     }
 
-
     @Controller
     public class showAdminPage {
         @Autowired
@@ -61,6 +56,9 @@ public class AppController implements WebMvcConfigurer {
 
         @Autowired
         private ZamowieniaDAO zamowieniaDAO;
+
+        @Autowired
+        private MagazynyDAO magazynyDAO;
 
         @Autowired
         private TowaryDAO towaryDAO;
@@ -87,7 +85,7 @@ public class AppController implements WebMvcConfigurer {
         @GetMapping("/Users")
         public String showUsersAdminPage(Model model, Principal principal) {
             User loggedInUser = userDAO.findByUsername(principal.getName());
-            int restrictedUserId = 31; // ID of the user you want to restrict.
+            int restrictedUserId = 31;
             model.addAttribute("loggedInUserId", loggedInUser.getId());
             model.addAttribute("restrictedUserId", restrictedUserId);
             model.addAttribute("usersTable", userDAO.list());
@@ -95,17 +93,11 @@ public class AppController implements WebMvcConfigurer {
         }
 
         @PostMapping("/updateOrder")
-        public String updateOrder(@RequestParam("id") int id,
-                                  @RequestParam("ilosc") int ilosc,
-                                  @RequestParam("status") String status) {
-            Zamowienia zamowienie = zamowieniaDAO.get(id);
-            if (zamowienie != null) {
-                zamowienie.setILOSC(ilosc);
-                zamowienie.setStatus(status);
-                zamowieniaDAO.update(zamowienie);
-            }
+        public String updateOrder(@ModelAttribute("zamowienie") Zamowienia zamowienie) {
+            zamowieniaDAO.update(zamowienie);
             return "redirect:/Orders";
         }
+
 
 
         @GetMapping("/Towary")
@@ -121,9 +113,16 @@ public class AppController implements WebMvcConfigurer {
             return "redirect:/Towary";
         }
 
+        @GetMapping("/editProduct/{id}")
+        public String showEditProductForm(@PathVariable("id") int id, Model model) {
+            Towary product = towaryDAO.get(id);
+            model.addAttribute("product", product);
+            return "admin/editProduct";
+        }
+
         @PostMapping("/updateProduct")
-        public String updateProduct(Towary product) {
-            towaryDAO.update(product);
+        public String updateProduct(@ModelAttribute Towary product) {
+            towaryDAO.save(product);
             return "redirect:/Towary";
         }
 
@@ -132,22 +131,57 @@ public class AppController implements WebMvcConfigurer {
             towaryDAO.delete(idTowaru);
             return "redirect:/Towary";
         }
+        @GetMapping("/Magazyny")
+        public String showMagazynyAdminPage(Model model) {
+            model.addAttribute("magazynyTable", magazynyDAO.list());
+            return "admin/Magazyny";
+        }
+        @PostMapping("/deleteMagazyn")
+        public String deleteMagazyn(@RequestParam("idmagazynu") int idmagazynu) {
+            magazynyDAO.delete(idmagazynu);
+            return "redirect:/Magazyny";
+        }
 
-    }
+        @PostMapping("/addMagazyn")
+        public String addPMagazyn(Magazyny magazyny) {
+            magazynyDAO.save(magazyny);
+            return "redirect:/Magazyny";
+        }
 
+        @GetMapping("/admin/editMagazyn/{id}")
+        public String showEditMagazynPage(@PathVariable("id") int id, Model model) {
+            Magazyny magazyn = magazynyDAO.get(id);
+            if (magazyn != null) {
+                model.addAttribute("magazyn", magazyn);
+                return "admin/editMagazyn";
+            } else {
+                return "redirect:/admin/Magazyny";
+            }
+        }
 
-    @Controller
-    public class showStaffPage {
-        @RequestMapping(value = {"/main_staff"})
-        public String showAdminPage(Model model) {
-            return "admin/main_staff";
+        @PostMapping("/editMagazyn")
+        public String updateMagazyn(@ModelAttribute("magazyn") Magazyny magazyn, BindingResult result) {
+            if (result.hasErrors()) {
+                return "admin/editMagazyn"; // повернення до форми редагування у разі помилок
+            }
+            magazynyDAO.save(magazyn); // виклик DAO для оновлення магазину
+            return "redirect:/Magazyny"; // перенаправлення до списку магазинів після оновлення
         }
 
 
 
     }
 
+    @Controller
+    public class showStaffPage {
+        @RequestMapping(value = {"/main_staff"})
+        public String showAdminPage(Model model) {
+            return "staff/main_staff";
+        }
 
+
+
+    }
 
     @Controller
     public class RegistrationController {
@@ -177,7 +211,6 @@ public class AppController implements WebMvcConfigurer {
         }
 
     }
-
 
     @Controller
     public class showUserPage {
@@ -211,8 +244,6 @@ public class AppController implements WebMvcConfigurer {
                 model.addAttribute("towaryTable", towaryDAO.list());
                 return "user/TowaryUser";
             }
-
-
 
         }
 

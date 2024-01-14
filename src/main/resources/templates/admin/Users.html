@@ -53,7 +53,7 @@
         <td>
           <form th:action="@{/updateUserRole}" method="post">
             <input type="hidden" name="id" th:value="${user.id}" />
-            <select name="role" th:disabled="${user.id == loggedInUserId}" onchange="this.form.submit()">
+            <select name="role" th:disabled="${user.id == loggedInUserId || user.id == restrictedUserId}" onchange="this.form.submit()">
               <option th:selected="${user.role == 'USER'}" value="USER">USER</option>
               <option th:selected="${user.role == 'STAFF'}" value="STAFF">STAFF</option>
               <option th:selected="${user.role == 'ADMIN'}" value="ADMIN">ADMIN</option>
