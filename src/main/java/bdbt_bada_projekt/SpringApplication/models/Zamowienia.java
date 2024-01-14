@@ -11,7 +11,7 @@ public class Zamowienia {
     private int IDZamowienia;
     private Date Data;
     private String Status;
-    private Integer Rabat;
+    private Double Rabat;
     private String Reklamacja;
     private int IDUser;
     private int IDTowaru;
@@ -20,7 +20,7 @@ public class Zamowienia {
     private Double TotalPrice;
 
 
-    public Zamowienia(Date data, String status, Integer rabat, String reklamacja, int IDUser, int IDTowaru, int ILOSC) {
+    public Zamowienia(Date data, String status, Double rabat, String reklamacja, int IDUser, int IDTowaru, int ILOSC) {
         Data = data;
         Status = status;
         Rabat = rabat;
@@ -47,7 +47,7 @@ public class Zamowienia {
         this.ILOSC = ILOSC;
     }
 
-    public Zamowienia(Date data, String status, Integer rabat, int IDUser, int IDTowaru, int ILOSC) {
+    public Zamowienia(Date data, String status, Double rabat, int IDUser, int IDTowaru, int ILOSC) {
         Data = data;
         Status = status;
         Rabat = rabat;
@@ -84,11 +84,11 @@ public class Zamowienia {
         Status = status;
     }
 
-    public Integer getRabat() {
+    public Double getRabat() {
         return Rabat;
     }
 
-    public void setRabat(Integer rabat) {
+    public void setRabat(Double rabat) {
         Rabat = rabat;
     }
 

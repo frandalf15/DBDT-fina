@@ -63,6 +63,9 @@ public class AppController implements WebMvcConfigurer {
         @Autowired
         private TowaryDAO towaryDAO;
 
+        @Autowired
+        private RabatyDAO rabatyDAO;
+
         @RequestMapping(value = {"/main_admin"})
         public String showAdminPage(Model model) {
             return "admin/main_admin";
@@ -164,10 +167,48 @@ public class AppController implements WebMvcConfigurer {
             if (result.hasErrors()) {
                 return "admin/editMagazyn"; // повернення до форми редагування у разі помилок
             }
-            magazynyDAO.save(magazyn); // виклик DAO для оновлення магазину
+            magazynyDAO.update(magazyn); // виклик DAO для оновлення магазину
             return "redirect:/Magazyny"; // перенаправлення до списку магазинів після оновлення
         }
 
+
+        @GetMapping("/Rabaty")
+        public String showRabatyAdminPage(Model model) {
+            model.addAttribute("rabatyTable", rabatyDAO.list());
+            return "admin/Rabaty";
+        }
+
+        @PostMapping("/addRabat")
+        public String addPMagazyn(Rabaty rabaty) {
+            rabatyDAO.save(rabaty);
+            return "redirect:/Rabaty";
+        }
+
+        @PostMapping("/deleteRabat")
+        public String deleteRabat(@RequestParam("id") int id) {
+            rabatyDAO.delete(id);
+            return "redirect:/Rabaty";
+        }
+
+        @GetMapping("/editRabat/{id}")
+        public String showEditRabatPage(@PathVariable("id") int id, Model model) {
+            Rabaty rabaty = rabatyDAO.get(id);
+            if (rabaty != null) {
+                model.addAttribute("rabaty", rabaty);
+                return "admin/editRabat";
+            } else {
+                return "redirect:/admin/Rabaty";
+            }
+        }
+
+        @PostMapping("/editRabat")
+        public String updateRabat(@ModelAttribute("rabaty") Rabaty rabaty, BindingResult result) {
+            if (result.hasErrors()) {
+                return "admin/editRabat"; // повернення до форми редагування у разі помилок
+            }
+            rabatyDAO.update(rabaty); // виклик DAO для оновлення магазину
+            return "redirect:/Rabaty"; // перенаправлення до списку магазинів після оновлення
+        }
 
 
     }
@@ -218,6 +259,8 @@ public class AppController implements WebMvcConfigurer {
         private TowaryDAO towaryDAO;
         private ZamowieniaDAO zamowieniaDAO;
 
+        @Autowired
+        private RabatyDAO rabatyDAO;
 
         @Controller
         public class TowaryUserController {
@@ -253,21 +296,27 @@ public class AppController implements WebMvcConfigurer {
             private final TowaryDAO towaryDAO;
             private final ZamowieniaDAO zamowieniaDAO;
             private final UserService userService;
+            private final RabatyDAO rabatyDAO;
 
             @Autowired
-            public ZamowieniaController(TowaryDAO towaryDAO, ZamowieniaDAO zamowieniaDAO, UserService userService) {
+            public ZamowieniaController(TowaryDAO towaryDAO, ZamowieniaDAO zamowieniaDAO, UserService userService, RabatyDAO rabatyDAO) {
                 this.towaryDAO = towaryDAO;
                 this.zamowieniaDAO = zamowieniaDAO;
                 this.userService = userService;
+                this.rabatyDAO = rabatyDAO;
             }
 
             @PostMapping("/placeOrder")
             public String placeOrder(@RequestParam("IDTowaru") int IDTowaru,
                                      @RequestParam("quantity") int quantity,
+                                     @RequestParam("rabat") String rabat,
                                      HttpServletRequest request) {
                 Towary towary = towaryDAO.get(IDTowaru);
+
                 if (towary != null) {
                     double totalPrice = towary.getCena() * quantity;
+                    Rabaty discount = rabatyDAO.findByNazwa(rabat);
+
                     Zamowienia zamowienia = new Zamowienia();
                     zamowienia.setIDUser(userService.getCurrentUserId());
                     zamowienia.setILOSC(quantity);
@@ -275,7 +324,14 @@ public class AppController implements WebMvcConfigurer {
                     zamowienia.setStatus("W trakcie realizacji");
                     Date now = new Date();
                     zamowienia.setData(new java.sql.Date(now.getTime()));
-                    zamowienia.setRabat(0);
+
+                    if (discount != null) {
+                        double discountAmount = totalPrice * discount.getRabat();
+                        totalPrice -= discountAmount;
+                        zamowienia.setRabat(discount.getRabat()); // Set the discount rate
+                    } else {
+                        zamowienia.setRabat(0.00);
+                    }
                     zamowienia.setTotalPrice(totalPrice);
                     zamowieniaDAO.save(zamowienia);
                 }
