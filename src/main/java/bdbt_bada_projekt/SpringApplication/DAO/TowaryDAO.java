@@ -54,6 +54,9 @@ public class TowaryDAO {
     }
 
     public void delete(int IDTOWARU) {
+        String sqlZamowienia = "DELETE FROM ZAMOWIENIA WHERE IDTOWARU = ?";
+        jdbcTemplate.update(sqlZamowienia, IDTOWARU);
+
         String sql = "DELETE FROM TOWARY WHERE IDTOWARU = ?";
         jdbcTemplate.update(sql, IDTOWARU);
     }

@@ -35,7 +35,6 @@
     </div>
 </nav>
 
-
 <div class="container mt-4">
     <h2 class="text-center mb-3">Products</h2>
 
@@ -58,7 +57,10 @@
                     <option value="Nieczynny">Nieczynny</option>
                     <option value="Beznieczynny">Beznieczynny</option>
                 </select>
-                <input type="number" name="IDMagazynu" placeholder="IDMagazynu" required class="form-control mr-2"/>
+                <select name="IDMagazynu" class="form-control mr-2">
+                    <option th:each="magazyn : ${magazynyTable}" th:value="${magazyn.idmagazynu}" th:text="${magazyn.idmagazynu}"></option>
+                </select>
+
                 <button type="submit" class="btn btn-success">Add Product</button>
             </form>
         </div>
@@ -88,9 +90,9 @@
                 <td>
                     <form th:action="@{/deleteProduct}" method="post">
                         <input type="hidden" name="idTowaru" th:value="${product.IDTowaru}"/>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" onclick="confirmDelete(this.form)" class="btn btn-danger" style="width: 75px; height: 30px; text-align: center; padding: 5px 10px;">Delete</button>
                     </form>
-                    <a th:href="@{/editProduct/{id}(id=${product.IDTowaru})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/editProduct/{id}(id=${product.IDTowaru})}" class="btn btn-primary" style="width: 75px; height: 30px; text-align: center; padding: 5px 10px; margin: 0 auto; ">Edit</a>
                 </td>
             </tr>
             </tbody>
@@ -98,6 +100,14 @@
     </div>
 </div>
 
+<script>
+    function confirmDelete(form) {
+        var confirmation = confirm("Czy na pewno chcesz usunąć ten towar i wszystkie powiązane dane?");
+        if (confirmation) {
+            form.submit();
+        }
+    }
+</script>
 
 <script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

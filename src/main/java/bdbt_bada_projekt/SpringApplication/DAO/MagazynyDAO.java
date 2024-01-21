@@ -52,6 +52,9 @@ public class MagazynyDAO {
 
     public void deleteCascade(int IDMAGAZYNU) {
 
+        String sqlDeleteZamowienia = "DELETE FROM ZAMOWIENIA WHERE IDTOWARU IN (SELECT IDTOWARU FROM towary WHERE IDMAGAZYNU = ?)";
+        jdbcTemplate.update(sqlDeleteZamowienia, IDMAGAZYNU);
+
         String sqlDeleteRelated = "DELETE FROM TOWARY WHERE IDMAGAZYNU = ?";
         jdbcTemplate.update(sqlDeleteRelated, IDMAGAZYNU);
 

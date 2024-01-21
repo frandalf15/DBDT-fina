@@ -106,9 +106,9 @@
                 <td>
                     <form th:action="@{/deleteMagazyn}" method="post">
                         <input type="hidden" name="idmagazynu" th:value="${magazyn.idmagazynu}"/>
-                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this.form)">Delete</button>
+                        <button type="button" class="btn btn-danger" style="width: 75px; height: 30px; text-align: center; padding: 5px 10px;" onclick="confirmDelete(this.form)">Delete</button>
                     </form>
-                    <a th:href="@{'admin/editMagazyn/' + ${magazyn.idmagazynu}}" class="btn btn-info">Edit</a>
+                    <a th:href="@{'admin/editMagazyn/' + ${magazyn.idmagazynu}}" class="btn btn-info" style="width: 75px; height: 30px; text-align: center; padding: 5px 10px;">Edit</a>
                 </td>
             </tr>
             </tbody>

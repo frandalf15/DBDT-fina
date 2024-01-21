@@ -108,6 +108,7 @@ public class AppController implements WebMvcConfigurer {
         public String showZamowienieAdminPage(Model model) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             model.addAttribute("productsTable", towaryDAO.list());
+            model.addAttribute("magazynyTable", magazynyDAO.list());
             return "admin/Towary";
         }
 
@@ -121,6 +122,7 @@ public class AppController implements WebMvcConfigurer {
         public String showEditProductForm(@PathVariable("id") int id, Model model) {
             Towary product = towaryDAO.get(id);
             model.addAttribute("product", product);
+            model.addAttribute("magazynyTable", magazynyDAO.list());
             return "admin/editProduct";
         }
 

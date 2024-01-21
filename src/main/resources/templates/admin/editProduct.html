@@ -67,8 +67,11 @@
       <option value="Beznieczynny" th:selected="${product.rodzajTowaru == 'Beznieczynny'}">Beznieczynny</option>
     </select>
     </div>
+
     <div class="form-group">
-    <input type="number" name="IDMagazynu" placeholder="IDMagazynu" required class="form-control mr-2"/>
+      <select name="IDMagazynu" class="form-control mr-2">
+        <option th:each="magazyn : ${magazynyTable}" th:value="${magazyn.idmagazynu}" th:text="${magazyn.idmagazynu}"></option>
+      </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Update Product</button>
