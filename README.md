@@ -1,1 +1,0 @@
-BDBT projekt sem3 
