@@ -27,7 +27,9 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/main").setViewName("main");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
+        registry.addViewController("/Korty").setViewName("admin/Korty");
         registry.addViewController("/main_user").setViewName("user/main_user");
+        registry.addViewController("/RezerwacjeUser").setViewName("user/RezerwacjeUser");
     }
 
     @Controller
@@ -60,8 +62,8 @@ public class AppController implements WebMvcConfigurer {
         }
 
         @PostMapping("/updateUserRole")
-        public String updateUserRole(@RequestParam("id") int id, @RequestParam("role") String role) {
-            User user = userDAO.get(id);
+        public String updateUserRole(@RequestParam("IDKortu") int IDKortu, @RequestParam("role") String role) {
+            User user = userDAO.get(IDKortu);
             user.setRole(role);
             userDAO.update(user);
             return "redirect:/Users";
@@ -81,33 +83,33 @@ public class AppController implements WebMvcConfigurer {
 
         @GetMapping("/Korty")
         public String showKortyAdminPage(Model model) {
-            model.addAttribute("kortyTable", kortDAO.list());
+            model.addAttribute("kortTable", kortDAO.list());
             return "admin/Korty";
         }
 
         @PostMapping("/addKort")
-        public String addKort(Kort korty) {
-            kortDAO.save(korty);
+        public String addKort(Kort kort) {
+            kortDAO.save(kort);
             return "redirect:/Korty";
         }
 
-        @GetMapping("/editKort/{id}")
-        public String showEditProductForm(@PathVariable("id") int id, Model model) {
-            Kort kort = kortDAO.get(id);
+        @GetMapping("/editKort/{IDKortu}")
+        public String showEditProductForm(@PathVariable("IDKortu") int IDKortu, Model model) {
+            Kort kort = kortDAO.get(IDKortu);
             model.addAttribute("kort", kort);
             return "admin/editKort";
         }
 
 
         @PostMapping("/updateProduct")
-        public String updateProduct(@ModelAttribute Kort korty) {
-            kortDAO.update(korty);
-            return "redirect:/Korty";
+        public String updateProduct(@ModelAttribute Kort kort) {
+            kortDAO.update(kort);
+            return "redirect:/Kort";
         }
 
         @PostMapping("/deleteKort")
-        public String deleteProduct(@RequestParam("idKortu") int idKortu) {
-            kortDAO.delete(idKortu);
+        public String deleteProduct(@RequestParam("IDKortu") int IDKortu) {
+            kortDAO.delete(IDKortu);
             return "redirect:/Korty";
         }
     }

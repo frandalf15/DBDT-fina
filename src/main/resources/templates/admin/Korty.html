@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Korty</title>
@@ -48,7 +48,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="kort : ${kortyTable}">
+      <tr th:each="kort : ${kortTable}">
         <td th:text="${kort.IDKortu}"></td>
         <td th:text="${kort.rodzajNawierzchni}"></td>
         <td th:text="${kort.rozmiar}"></td>
@@ -78,14 +78,27 @@
           <option value="Maczka">Maczka</option>
         </select>
         <input type="number" name="Rozmiar" placeholder="rozmiar" required class="form-control mr-2"/>
-        <input type="text" name="dataPowstania" placeholder="dataPowstania" required class="form-control mr-2"/>
-        <input type="text" name="stanTechniczny" placeholder="stanTechniczny" required class="form-control mr-2"/>
-        <input type="text" name="iloscMiejc" placeholder="iloscMiejc" required class="form-control mr-2"/>
-        <input type="number" name="idSiedziby" placeholder="idSiedziby" required class="form-control mr-2"/>
-        <input type="number" name="idMeczu" placeholder="iloscMiejc" required class="form-control mr-2"/>
-        <button type="submit" class="btn btn-success">Add Product</button>
+        <input type="text" name="dataPowstania" placeholder="Data powstania" required class="form-control mr-2"/>
+        <input type="text" name="stanTechniczny" placeholder="Stan techniczny" required class="form-control mr-2"/>
+        <input type="text" name="iloscMiejc" placeholder="Ilosc miejc" required class="form-control mr-2"/>
+        <input type="number" name="idSiedziby" placeholder="ID siedziby" required class="form-control mr-2"/>
+        <input type="number" name="idMeczu" placeholder="ID meczu" required class="form-control mr-2"/>
+        <button type="submit" class="btn btn-success">Dodaj kort</button>
       </form>
     </div>
   </div>
+  <script>
+    function confirmDelete(form) {
+        var confirmation = confirm("Czy na pewno chcesz usunąć ten kort i wszystkie powiązane dane?");
+        if (confirmation) {
+            form.submit();
+        }
+    }
+  </script>
+  <script src="/webjars/popper.js/umd/popper.min.js" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+  <script src="/webjars/bootstrap/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

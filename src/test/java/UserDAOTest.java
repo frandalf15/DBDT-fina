@@ -1,5 +1,4 @@
 import bdbt_bada_projekt.SpringApplication.DAO.UserDAO;
-import bdbt_bada_projekt.SpringApplication.models.Towary;
 import bdbt_bada_projekt.SpringApplication.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,8 @@ class UserDAOTest {
     void setUp() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
-        dataSource.setUsername("ARTUR");
-        dataSource.setPassword("ARTUR");
+        dataSource.setUsername("fmakulsk");
+        dataSource.setPassword("franek15");
         dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
 
         dao = new UserDAO(new JdbcTemplate(dataSource));

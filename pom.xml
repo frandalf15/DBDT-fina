@@ -51,7 +51,7 @@
 			<artifactId>ojdbc11</artifactId>
 			<version>11</version>
 			<scope>system</scope>
-			<systemPath>E:/ojdbc11.jar</systemPath>
+			<systemPath>C:/Users/frane/Downloads/sqldeveloper-23.1.1.345.2114-x64/sqldeveloper/sqldeveloper/lib/ojdbc11.jar</systemPath>
 		</dependency>
 
 

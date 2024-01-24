@@ -18,47 +18,46 @@ public class KortDAO {
     private JdbcTemplate jdbcTemplate;
 
     public KortDAO(JdbcTemplate jdbcTemplate) {
+        super();
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Kort> list(){
         String sql = "SELECT * FROM Kort";
-        List<Kort> listKort = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Kort.class));
+        List<Kort> listKort = jdbcTemplate.query(sql,
+                BeanPropertyRowMapper.newInstance(Kort.class));
         return listKort;
     }
 
-    public void save(Kort korty) {
+    public void save(Kort kort) {
         SimpleJdbcInsert insertAction = new SimpleJdbcInsert(jdbcTemplate);
         insertAction.withTableName("KORT")
                 .usingGeneratedKeyColumns("IDKORTU")
                 .usingColumns( "RODZAJNAWIERZCHNI", "ROZMIAR", "DATAPOWSTANIA", "STANTECHNICZNY", "ILOSCMIEJSC", "IDSIEDZIBY", "IDMECZU");
-        BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(korty);
-        Number id = insertAction.executeAndReturnKey(param);
-        korty.setIDKortu(id.intValue());
+        BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(kort);
+        Number IDKortu = insertAction.executeAndReturnKey(param);
+        kort.setIDKortu(IDKortu.intValue());
     }
 
-    public Kort get(int IDTOWARU) {
-        Object[] args = {IDTOWARU};
-        String sql = "SELECT * FROM KORT WHERE IDKORTU = " + args[0];
-        Kort kort = jdbcTemplate.queryForObject(sql,
-                BeanPropertyRowMapper.newInstance(Kort.class));
-        return kort;
+    public Kort get(int IDKortu) {
+        String sql = "SELECT * FROM KORT WHERE IDKORTU = ?" ;
+       return jdbcTemplate.queryForObject(sql, new Object[]{IDKortu},
+                new BeanPropertyRowMapper<>(Kort.class));
+
     }
 
-    public void update(Kort korty) {
-        String sql = "UPDATE KORT SET RODZAJNAWIERZCHNI=:RodzajNawierzchni, ROZMIAR=:rozmiar, " +
-                "DATAPOWSTANIA=:DataPowstania, STANTECHNICZNY=:StanTechniczny, ILOSCMIEJSC=:IloscMiejsc, IDSIEDZIBY=:IDSiedziby WHERE IDMECZU=:IDMeczu";
-        BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(korty);
-        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+    public void update(Kort kort) {
+        String sql = "UPDATE KORT SET RODZAJNAWIERZCHNI= ?, ROZMIAR= ?, " +
+                "DATAPOWSTANIA= ?, STANTECHNICZNY= ?, ILOSCMIEJSC= ?, IDSIEDZIBY= ? WHERE IDMECZU= ?";
 
-        template.update(sql, param);
+        jdbcTemplate.update(sql, kort.getRodzajNawierzchni(), kort.getRozmiar(), kort.getDataPowstania(), kort.getStanTechniczny(), kort.getIloscMiejsc(), kort.getIDSiedziby(), kort.getIDMeczu());
     }
 
-    public void delete(int IDKORTU) {
+    public void delete(int IDKortu) {
 //        String sqlKortu = "DELETE FROM KORT WHERE IDKORTU = ?";
 //        jdbcTemplate.update(sqlKortu, IDTOWARU);
 
         String sql = "DELETE FROM KORT WHERE IDKORTU = ?";
-        jdbcTemplate.update(sql, IDKORTU);
+        jdbcTemplate.update(sql, IDKortu);
     }
 }

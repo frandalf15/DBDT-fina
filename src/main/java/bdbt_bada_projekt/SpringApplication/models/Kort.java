@@ -17,6 +17,17 @@ public class Kort {
     private int IDSiedziby;
     private int IDMeczu;
 
+    private String RodzajNawierzchni;
+    public String getRodzajNawierzchni() {
+        return RodzajNawierzchni;
+    }
+
+    public void setRodzajNawierzchni(String rodzajNawierzchni) {
+        RodzajNawierzchni = rodzajNawierzchni;
+    }
+
+
+
     public int getIDKortu() {
         return IDKortu;
     }
